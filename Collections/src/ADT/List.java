@@ -1,10 +1,7 @@
 package ADT;
 
-<<<<<<< HEAD
-public interface List <E> extends Iterable <E>
-=======
 public interface List <E> extends Iterable<E>
->>>>>>> e98679d605d3dc318b0e60f740f69be157d55a41
+
 {
     // Returns the number of elements in this list.
     int size();

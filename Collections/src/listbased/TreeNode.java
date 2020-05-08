@@ -1,9 +1,7 @@
 package listbased;
 
-<<<<<<< HEAD
-=======
+
 import ADT.Iterator;
->>>>>>> e98679d605d3dc318b0e60f740f69be157d55a41
 import ADT.List;
 import arraybased.ArrayList;
 
@@ -40,17 +38,13 @@ public class TreeNode <E>
     public void addChildren(List<TreeNode<E>> ch)
     {
         int count = 0;
-<<<<<<< HEAD
-        for (TreeNode<E> obj : ch)
-            children.add(count++, obj);
-=======
+        
         Iterator<TreeNode<E>> iter=ch.iterator();
         while(iter.hasNext())
             children.add(count++, iter.next());
 
         //for (TreeNode<E> obj : ch)
         //    children.add(count++, obj);
->>>>>>> e98679d605d3dc318b0e60f740f69be157d55a41
     }
 
     public int numChildren(TreeNode<E> node)
