@@ -3,6 +3,8 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/ADTGIT.iml" filepath="$PROJECT_DIR$/ADTGIT.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Collections/Collections.iml" filepath="$PROJECT_DIR$/Collections/Collections.iml" />
+      <module fileurl="file://$PROJECT_DIR$/StackClient/StackClient.iml" filepath="$PROJECT_DIR$/StackClient/StackClient.iml" />
     </modules>
   </component>
 </project>
