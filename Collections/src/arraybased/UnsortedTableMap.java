@@ -18,7 +18,7 @@ public class UnsortedTableMap<K,V> extends AbstractMap<K,V>
 
     // private utility
     // Returns the index of an entry with equal key, or − 1 if none found.
-    private int ﬁndIndex(K key)
+    private int findIndex(K key)
     {
         int n = table.size();
         for (int j=0; j < n; j++)
@@ -32,14 +32,14 @@ public class UnsortedTableMap<K,V> extends AbstractMap<K,V>
     // Returns the value associated with the speciﬁed key (or else null). ∗/
     public V get(K key)
     {
-        int j = ﬁndIndex(key);
+        int j = findIndex(key);
         if (j == - 1) return null; // not found
         return table.get(j).getValue();
     }
     // Associates given value with given key, replacing a previous value (if any).
     public V put(K key, V value)
     {
-        int j = ﬁndIndex(key);
+        int j = findIndex(key);
         if (j == - 1)
         {
             table.add(new MapEntry<>(key, value)); // add new entry
@@ -50,7 +50,7 @@ public class UnsortedTableMap<K,V> extends AbstractMap<K,V>
     // Removes the entry with the speciﬁed key (if any) and returns its value.
     public V remove(K key)
     {
-        int j = ﬁndIndex(key);
+        int j = findIndex(key);
         int n = size();
         if (j == - 1) return null; // not found
         V answer = table.get(j).getValue();
