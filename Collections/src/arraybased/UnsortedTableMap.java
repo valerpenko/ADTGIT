@@ -55,7 +55,7 @@ public class UnsortedTableMap<K,V> extends AbstractMap<K,V>
         if (j == - 1) return null; // not found
         V answer = table.get(j).getValue();
         if (j != n - 1)
-        table.set(j, table.get(n - 1)); // relocate last entry to ’hole’ created by removal
+            table.set(j, table.get(n - 1)); // relocate last entry to ’hole’ created by removal
         table.remove(n - 1); // remove last entry of table
         return answer;
     }
