@@ -2,7 +2,7 @@ package ADT;
 import java.util.NoSuchElementException;
 
 
-public interface Iterator <E> extends java.util.Iterator<E>
+public interface _Iterator <E>
 {
     boolean hasNext();
     E next() throws NoSuchElementException;

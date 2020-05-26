@@ -1,13 +1,14 @@
 package arraybased;
-import ADT.Iterator;
+import java.util.Iterator;
+import arraybased._ArrayList;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-class ArrayListTest {
+class _ArrayListTest {
 
     @Test
     void size() {
-        ArrayList<Integer> al = new ArrayList<>();
+        _ArrayList<Integer> al = new _ArrayList<>();
         al.add(0,1);al.add(1,2);al.add(2,3);
         int actual = al.size();
         int expected = 3;
@@ -16,14 +17,14 @@ class ArrayListTest {
 
     @Test
     void isEmpty() {
-        ArrayList<Integer> al = new ArrayList<>();
+        _ArrayList<Integer> al = new _ArrayList<>();
         //al.add(0,1);
         Assertions.assertTrue(al.isEmpty());
     }
 
     @Test
     void get() {
-        ArrayList<Integer> al = new ArrayList<>();
+        _ArrayList<Integer> al = new _ArrayList<>();
         al.add(0,1);al.add(1,17);al.add(2,9);
         int actual = al.get(1);
         int expected = 17;
@@ -32,7 +33,7 @@ class ArrayListTest {
 
     @Test
     void set() {
-        ArrayList<Integer> al = new ArrayList<>();
+        _ArrayList<Integer> al = new _ArrayList<>();
         al.add(0,1);al.add(1,17);al.add(2,9);
         al.set(2, 50);
         int actual = al.get(2);
@@ -46,7 +47,7 @@ class ArrayListTest {
 
     @Test
     void remove() {
-        ArrayList<Integer> al = new ArrayList<>();
+        _ArrayList<Integer> al = new _ArrayList<>();
         al.add(0,1);al.add(1,7);al.add(2,25);
         al.remove(0);
         int actual = al.get(0);
@@ -56,7 +57,7 @@ class ArrayListTest {
 
     @Test
     void iterator() {
-        ArrayList<Integer> al = new ArrayList<>();
+        _ArrayList<Integer> al = new _ArrayList<>();
         al.add(0,5);
         al.add(1,10);
         al.add(2,15);

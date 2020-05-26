@@ -1,8 +1,8 @@
 package listbased;
 
 import ADT.IterablePositionalList;
-import ADT.Iterable;
-import ADT.Iterator;
+import java.lang.Iterable;
+import java.util.Iterator;
 import ADT.Position;
 
 import java.util.NoSuchElementException;

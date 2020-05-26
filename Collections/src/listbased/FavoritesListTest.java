@@ -1,7 +1,7 @@
 package listbased;
 
-import ADT.Iterable;
-import ADT.Iterator;
+import java.lang.Iterable;
+import java.util.Iterator;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 

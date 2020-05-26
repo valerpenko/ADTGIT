@@ -1,6 +1,6 @@
 package arraybased;
 
-import ADT.Iterator;
+import java.util.Iterator;
 import ADT.Set;
 import ADT.SetUtil;
 import Exceptions.SetEmptyException;
@@ -99,7 +99,7 @@ public class ArraySet <E> implements Set <E>, SetUtil <E>
         return mutualMembers;
     }
 
-    private class SetIterator implements ADT.Iterator<E>
+    private class SetIterator implements Iterator<E>
     {
         private int j = 0; // index of the next element to report
         private boolean removable = false; // can remove be called at this time?
