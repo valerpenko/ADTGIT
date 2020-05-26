@@ -1,19 +1,19 @@
 package arraybased;
 
-import ADT.Iterator;
+import java.util.Iterator;
 import ADT.List;
 
 import java.util.NoSuchElementException;
 
-public class ArrayList <E> implements List <E>
+public class _ArrayList <E> implements List <E>
 {
     // instance variables
     public static final int CAPACITY=16; // default array capacity
     private E[ ] data; // generic array used for storage
     private int size = 0; // current number of elements
     // constructors
-    public ArrayList() { this(CAPACITY); } // constructs list with default capacity
-    public ArrayList(int capacity)
+    public _ArrayList() { this(CAPACITY); } // constructs list with default capacity
+    public _ArrayList(int capacity)
     {
         // constructs list with given capacity
         data = (E[ ]) new Object[capacity]; // safe cast; compiler may give warning
@@ -109,7 +109,7 @@ public class ArrayList <E> implements List <E>
         public void remove() throws IllegalStateException
         {
             if (!removable) throw new IllegalStateException("nothing to remove");
-            ArrayList.this.remove(j - 1); // that was the last one returned
+            _ArrayList.this.remove(j - 1); // that was the last one returned
             j -- ; // next element has shifted one cell to the left
             removable = false; // do not allow remove again until next is called
         }

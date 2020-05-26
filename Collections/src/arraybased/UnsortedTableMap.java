@@ -2,8 +2,8 @@ package arraybased;
 
 import ADT.AbstractMap;
 import ADT.Entry;
-import ADT.Iterable;
-import ADT.Iterator;
+import java.lang.Iterable;
+import java.util.Iterator;
 import java.util.ArrayList;
 
 import java.util.NoSuchElementException;

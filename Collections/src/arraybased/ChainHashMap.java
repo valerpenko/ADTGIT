@@ -3,6 +3,7 @@ package arraybased;
 import ADT.AbstractHashMap;
 import ADT.Entry;
 import java.util.ArrayList;
+import java.util.Iterator;
 
 public class ChainHashMap<K,V> extends AbstractHashMap<K,V>
 {
@@ -45,13 +46,13 @@ public class ChainHashMap<K,V> extends AbstractHashMap<K,V>
         return answer;
     }
     // Returns an iterable collection of all key-value entries of the map.
-    public ADT.Iterable<Entry<K,V>> entrySet()
+    public Iterable<Entry<K,V>> entrySet()
     {
         ArrayList<Entry<K,V>> buffer = new ArrayList<>();
         for (int h=0; h < capacity; h++)
             if (table[h] != null)
             for (Entry<K,V> entry : table[h].entrySet())
             buffer.add(entry);
-        return (ADT.Iterable<Entry<K, V>>) buffer;
+        return buffer;
     }
 }

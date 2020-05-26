@@ -1,7 +1,7 @@
 package arraybased;
 
 
-import ADT.Iterator;
+import java.util.Iterator;
 import Exceptions.SetEmptyException;
 import Exceptions.SetFullException;
 import org.junit.jupiter.api.Assertions;

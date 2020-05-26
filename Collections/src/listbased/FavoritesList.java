@@ -1,7 +1,7 @@
 package listbased;
 
-import ADT.Iterator;
-import ADT.Iterable;
+import java.util.Iterator;
+import java.lang.Iterable;
 import ADT.Position;
 import ADT.PositionalList;
 
