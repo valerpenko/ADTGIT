@@ -20,5 +20,7 @@ public class SortedMapTest
 
         for (Entry<Integer, String> obj : sortMap.entrySet())
             System.out.println(obj.getKey());
+        System.out.println(sortMap.firstEntry().getKey());
+        System.out.println(sortMap.firstEntry().getValue());
     }
 }
