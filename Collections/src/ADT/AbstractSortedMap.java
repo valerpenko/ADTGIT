@@ -1,9 +1,8 @@
 package ADT;
 
 import java.util.Comparator; //http://homepage.cs.uiowa.edu/~bmccune/021/files/maps/AbstractSortedMap.java
-import java.util.SortedMap;
 
-public abstract class AbstractSortedMap<K,V> extends AbstractMap<K,V>// implements SortedMap<K,V>
+public abstract class AbstractSortedMap<K,V> extends AbstractMap<K,V> implements SortedMap<K,V>
 {
 
     // instance variable for an AbstractSortedMap
@@ -26,28 +25,16 @@ public abstract class AbstractSortedMap<K,V> extends AbstractMap<K,V>// implemen
     }
 
     /** Method for comparing two entries according to key */
-    protected int compare(Entry<K,V> a, Entry<K,V> b)
-    {
-        return comp.compare(a.getKey(), b.getKey());
-    }
+    protected int compare(Entry<K,V> a, Entry<K,V> b) { return comp.compare(a.getKey(), b.getKey()); }
 
     /** Method for comparing a key and an entry's key */
-    protected int compare(K a, Entry<K,V> b)
-    {
-        return comp.compare(a, b.getKey());
-    }
+    protected int compare(K a, Entry<K,V> b) { return comp.compare(a, b.getKey()); }
 
     /** Method for comparing a key and an entry's key */
-    protected int compare(Entry<K,V> a, K b)
-    {
-        return comp.compare(a.getKey(), b);
-    }
+    protected int compare(Entry<K,V> a, K b) { return comp.compare(a.getKey(), b); }
 
     /** Method for comparing two keys */
-    protected int compare(K a, K b)
-    {
-        return comp.compare(a, b);
-    }
+    protected int compare(K a, K b)  { return comp.compare(a, b); }
 
     /** Determines whether a key is valid. */
     protected boolean checkKey(K key) throws IllegalArgumentException
