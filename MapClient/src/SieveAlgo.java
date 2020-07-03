@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 public class SieveAlgo
 {
     public static void main(String[] args)
@@ -13,19 +15,14 @@ public class SieveAlgo
     public static boolean findPrimes(int num)
     {
         int k = 2;
-        boolean[] Sieve = new boolean[num];
+        int primeDivs = (int) Math.sqrt(2*num);
+        boolean[] Sieve = EratospheneSieve(primeDivs);
+        ArrayList<Integer> primes= Sieve2Primes(Sieve);
 
-        while(k < num)
-            while(!Sieve[k]) k++;
-            for(int i = k; i < num; i += k)
-                Sieve[i] = false;
-            k++;
-
-        double primeDivs = Math.sqrt(num);
         for(int t = num; t < 2*num; t++)
         {
-            for (int i = k; i <= primeDivs; i++)
-                if(num % i == 0) { return false; }
+            for (int i = k; i <= primes.size(); i++)
+                if(t % i == 0) { return false; }
         }
         return true;
 //        for(int i = 2; i <= Math.sqrt(num); i ++)
@@ -34,5 +31,29 @@ public class SieveAlgo
 //        }
 //        return true;
 
+    }
+
+    private static  boolean[] EratospheneSieve(int num) {
+        boolean[] sieve = new boolean[num];
+        int k = 2;
+        while(k < num) {
+            while (sieve[k]) k++;
+
+            int i=k+k;
+            if (i>num) break;
+            while(i<num) {
+                sieve[i] = true;
+                i += k;
+            }
+            k++;
+        }
+        return sieve;
+    }
+    private static ArrayList<Integer> Sieve2Primes(boolean[] sieve)
+    {
+        ArrayList<Integer> primes= new ArrayList<>();
+        for(int i=2;i<sieve.length;i++)
+            if(!sieve[i]) primes.add(i);
+        return primes;
     }
 }
