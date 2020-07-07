@@ -9,28 +9,53 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Scanner;
 
-public class SpellCheck
+public class SpellChecker
 {
+    private Set<String> dictionary;
     public static void main(String[] args) throws IOException, SetFullException
     {
-        SpellChecker();
+        Scanner scan = new Scanner(System.in);
+        String word = scan.nextLine();
+        SpellChecker.Check(word);
+        //show proposed words
     }
 
-    public static String SpellChecker() throws IOException, SetFullException
-    {
-        Set<String> dictionary = new ArraySet<String>(100000);
+    public static SpellChecker() //throws IOException, SetFullException
+     {
+        dictionary = new ArraySet<String>(100000);
 
         Path p = Paths.get("D:/desktop/dictionary.txt");
         BufferedReader reader = Files.newBufferedReader(p);
         String line = reader.readLine();
         dictionary.add(line);
+    }
+    public Set<String> Check(String word)
+    {
+        Set<String> result= new ArraySet<>();
 
-        Scanner scan = new Scanner(System.in);
-        String word = scan.nextLine();
-        if (!dictionary.contains(word))  // must compare words!
-            System.out.println("Incorrect spelling");
-        else
-            return word;
-        return line;
+        if (dictionary.contains(word))  // must compare words!
+            return result;
+        else {
+            Iterator<String> mIterator = new MispellingIterator(word);
+            String mp;
+            while(mp=mIterator.Next()!=null)
+            {
+                if (dictionary.contains(mp))
+                    result.add(mp);
+            }
+            return mp;
+        }
+    }
+    class MispellingIterator
+    {
+        private Set<String> mispellings=new ArraySet<>();
+        public MispellingIterator(String word)
+        {
+            //fill misspelling
+        }
+        public String Next()
+        {
+
+        }
     }
 }
