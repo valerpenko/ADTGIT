@@ -1,8 +1,9 @@
-import ADT.Iterator;
 import ADT.Set;
 import Exceptions.SetEmptyException;
 import Exceptions.SetFullException;
 import arraybased.ArraySet;
+
+import java.util.Iterator;
 
 public class SetEvenCheck
 {

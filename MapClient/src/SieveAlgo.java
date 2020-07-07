@@ -19,6 +19,7 @@ public class SieveAlgo
         boolean[] Sieve = EratospheneSieve(primeDivs);
         ArrayList<Integer> primes= Sieve2Primes(Sieve);
 
+
         for(int t = num; t < 2*num; t++)
         {
             for (int i = k; i <= primes.size(); i++)
