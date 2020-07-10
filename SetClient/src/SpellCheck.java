@@ -20,7 +20,7 @@ public class SpellChecker
         //show proposed words
     }
 
-    public static SpellChecker() //throws IOException, SetFullException
+    public SpellChecker() //throws IOException, SetFullException
      {
         dictionary = new ArraySet<String>(100000);
 
