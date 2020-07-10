@@ -11,7 +11,7 @@ import java.util.Scanner;
 
 public class SpellChecker
 {
-    private Set<String> dictionary;
+    private static Set<String> dictionary;
     public static void main(String[] args) throws IOException, SetFullException
     {
         Scanner scan = new Scanner(System.in);
@@ -20,20 +20,42 @@ public class SpellChecker
         //show proposed words
     }
 
-    public SpellChecker() //throws IOException, SetFullException
-     {
+    static
+    {
         dictionary = new ArraySet<String>(100000);
 
         Path p = Paths.get("D:/desktop/dictionary.txt");
-        BufferedReader reader = Files.newBufferedReader(p);
-        String line = reader.readLine();
-        dictionary.add(line);
+        BufferedReader reader = null;
+        try {
+            reader = Files.newBufferedReader(p);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        String line = null;
+        try {
+            line = reader.readLine();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        try {
+            dictionary.add(line);
+        } catch (SetFullException e) {
+            e.printStackTrace();
+        }
     }
-    public Set<String> Check(String word)
-    {
+//    public  SpellChecker() throws IOException, SetFullException
+//     {
+//        dictionary = new ArraySet<String>(100000);
+//
+//        Path p = Paths.get("D:/desktop/dictionary.txt");
+//        BufferedReader reader = Files.newBufferedReader(p);
+//        String line = reader.readLine();
+//        dictionary.add(line);
+//    }
+    public Set<String> Check(String word) throws SetFullException {
         Set<String> result= new ArraySet<>();
 
-        if (dictionary.contains(word))  // must compare words!
+        if (dictionary.contains(word))
             return result;
         else {
             Iterator<String> mIterator = new MispellingIterator(word);
