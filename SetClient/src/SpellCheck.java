@@ -7,9 +7,10 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Iterator;
 import java.util.Scanner;
 
-public class SpellChecker
+class SpellChecker
 {
     private static Set<String> dictionary;
     public static void main(String[] args) throws IOException, SetFullException
@@ -52,32 +53,39 @@ public class SpellChecker
 //        String line = reader.readLine();
 //        dictionary.add(line);
 //    }
-    public Set<String> Check(String word) throws SetFullException {
+    public static Set<String> Check(String word) throws SetFullException
+    {
         Set<String> result= new ArraySet<>();
 
         if (dictionary.contains(word))
             return result;
-        else {
-            Iterator<String> mIterator = new MispellingIterator(word);
-            String mp;
-            while(mp=mIterator.Next()!=null)
+        else{
+            MisspellingIterator<String> mIterator = new MisspellingIterator<>(word);
+            //String mp = null;
+            while(mIterator.hasNext())//mp=mIterator.hasNext()!=null
             {
-                if (dictionary.contains(mp))
-                    result.add(mp);
+                if (dictionary.contains(mIterator.Next()))
+                    result.add(mIterator.Next());
             }
-            return mp;
+            return result;
         }
     }
-    class MispellingIterator
+    private static class MisspellingIterator<E>
     {
-        private Set<String> mispellings=new ArraySet<>();
-        public MispellingIterator(String word)
+        private ArraySet<String> mispellings = new ArraySet<>();
+        Iterator<String> iter = mispellings.iterator();
+
+        public MisspellingIterator(String word) throws SetFullException
         {
-            //fill misspelling
+            mispellings.add(word);//fill misspelling
         }
         public String Next()
         {
-
+            return iter.next();
+        }
+        public boolean hasNext()
+        {
+            return iter.hasNext();
         }
     }
 }
