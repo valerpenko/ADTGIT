@@ -1,14 +1,14 @@
 package listbased;
 
 import ADT.AbstractSortedMap;
-//import ADT.Position;
+import ADT.Position;
 import ADT.SkipList;
 import listbased.DoublyLinkedList;
 
 import java.util.ArrayList;
 import java.util.Random;
 
-public class SkipListSortedMap<K,V> extends AbstractSortedMap<K,V>
+public class SkipListSortedMap<K,V> extends AbstractSortedMap<K,V> implements SkipList<K>
 {
     SkipList skipList=new LinkedSkipList();
 
