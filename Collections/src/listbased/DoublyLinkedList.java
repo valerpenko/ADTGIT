@@ -35,11 +35,11 @@ public class DoublyLinkedList<E>
     public int size() { return size; }
         //∗∗ Tests whether the linked list is empty. ∗/
     public boolean isEmpty() { return size == 0; }
-        //∗∗ Returns (but does not remove) the ﬁrst element of the list. ∗/
-    public E ﬁrst()
+        //∗∗ Returns (but does not remove) the first element of the list. ∗/
+    public E first()
     {
         if (isEmpty()) return null;
-        return header.getNext().getElement(); // ﬁrst element is beyond header
+        return header.getNext().getElement(); // first element is beyond header
     }
         //∗∗ Returns (but does not remove) the last element of the list. ∗/
     public E last()
@@ -58,11 +58,11 @@ public class DoublyLinkedList<E>
     {
         addBetween(e, trailer.getPrev(), trailer); // place just before the trailer
     }
-        //∗∗ Removes and returns the ﬁrst element of the list. ∗/
+        //∗∗ Removes and returns the first element of the list. ∗/
     public E removeFirst()
     {
         if (isEmpty()) return null; // nothing to remove
-        return remove(header.getNext()); // ﬁrst element is beyond header
+        return remove(header.getNext()); // first element is beyond header
     }
         //∗∗ Removes and returns the last element of the list. ∗/
     public E removeLast()

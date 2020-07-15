@@ -6,6 +6,7 @@ import ADT.SkipList;
 import listbased.DoublyLinkedList;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 public class SkipListSortedMap<K,V> extends AbstractSortedMap<K,V>
 {
@@ -16,10 +17,37 @@ public class SkipListSortedMap<K,V> extends AbstractSortedMap<K,V>
     {
         ArrayList <DoublyLinkedList<E>> horizontalLists;  // approx ln n
         DoublyLinkedList<E>[] verticalLists;    // n+2
+        private Random rnd= new Random();
 
         public  LinkedSkipList(ArrayList<E> source)
         {
             //see Goodrich p.436
+            int level =0;
+            DoublyLinkedList<E> hlBase=new DoublyLinkedList<E>();
+            DoublyLinkedList<E> hlAbove;
+            //fill hl with source
+            while(hlBase.size()>1)
+            {
+                hlAbove = MakeLevelAbove(hlBase);
+                horizontalLists.add(hlAbove);
+                hlBase=hlAbove;
+                level++;
+            }
+        }
+        private DoublyLinkedList<E> MakeLevelAbove(DoublyLinkedList<E> hlBase)
+        //fills level randomly with subset from hlBase
+        //makes vertical links for towers
+        {
+            DoublyLinkedList<E> levelAbove = new DoublyLinkedList<E>();
+            E item=hlBase.first();
+            while (item!=null)
+            {
+                if (rnd.nextBoolean())
+                {
+
+                }
+                item=hlBase.
+            }
         }
 
         Position<E> next(Position<E> p); //Returns the position following p on the same level.
