@@ -12,7 +12,7 @@ import java.util.Scanner;
 
 class SpellChecker
 {
-    private static Set<String> dictionary;
+    private static ArraySet<String> dictionary;
     public static void main(String[] args) throws IOException, SetFullException
     {
         Scanner scan = new Scanner(System.in);
@@ -58,14 +58,19 @@ class SpellChecker
         Set<String> result= new ArraySet<>();
 
         if (dictionary.contains(word))
+        {
+            result.add(word);
             return result;
+        }
         else{
-            MisspellingIterator<String> mIterator = new MisspellingIterator<>(word);
+            //MisspellingIterator<String> mIterator = new MisspellingIterator<>(word);
+            Iterator<String> mIterator = dictionary.iterator();
             //String mp = null;
             while(mIterator.hasNext())//mp=mIterator.hasNext()!=null
             {
-                if (dictionary.contains(mIterator.Next()))
-                    result.add(mIterator.Next());
+                //if (dictionary.contains(mIterator.next()));
+                if (mIterator.next().compareTo(word)>1)
+                    result.add(mIterator.next());
             }
             return result;
         }

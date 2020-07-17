@@ -26,6 +26,9 @@ public class SkipListSortedMap<K,V> extends AbstractSortedMap<K,V> implements Sk
             DoublyLinkedList<E> hlBase=new DoublyLinkedList<E>();
             DoublyLinkedList<E> hlAbove;
             //fill hl with source
+            hlBase.addFirst(source.get(0));
+            for(int i = 1; i < source.size(); i++) {hlBase.addLast(source.get(i));}
+
             while(hlBase.size()>1)
             {
                 hlAbove = MakeLevelAbove(hlBase);
