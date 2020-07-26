@@ -22,13 +22,25 @@ class SpellChecker
         Set<String> prompts = SpellChecker.Check(word);
 
         //show proposed words
+        for (String s:prompts) {
+            System.out.println(s);
+        }
+        word = scan.nextLine();
+        prompts = SpellChecker.Check(word);
+
+        //show proposed words
+        for (String s:prompts) {
+            System.out.println(s);
+        }
     }
 
     static
     {
         dictionary = new ArraySet<String>(100000);
 
-        Path p = Paths.get("D:\\Project_files\\ADTGIT\\SetClient\\dictionary.txt");
+        //Path p = Paths.get("D:\\Project_files\\ADTGIT\\SetClient\\dictionary.txt");
+        Path p = Paths.get("D:\\Projects\\Java\\ADTGIT\\SetClient\\dictionary.txt");
+
         BufferedReader reader = null;
         try {
             reader = Files.newBufferedReader(p);
@@ -102,11 +114,10 @@ class SpellChecker
 
         public MisspellingIterator(String word) throws SetFullException
         {
-            mispellings.add(word);//fill misspelling
+            //mispellings.add(word);//fill misspelling
             AddExtraChar(word);
             ReplaceChar(word);
             DeleteChar(word);
-
         }
         private void ReplaceChar(String word)
         {
@@ -121,12 +132,13 @@ class SpellChecker
         }
         private void AddExtraChar(String word)
         {
-            StringBuilder str = new StringBuilder(word);
+            StringBuilder str;
 
             for(char ch : alphabet)
             {
-                for (int j = 0; j < str.length(); j++)
+                for (int j = 0; j < word.length(); j++)
                 {
+                    str = new StringBuilder(word);
                     mispellings.add(str.insert(j, ch).toString());
                 }
             }
