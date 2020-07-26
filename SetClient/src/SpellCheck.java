@@ -28,7 +28,7 @@ class SpellChecker
     {
         dictionary = new ArraySet<String>(100000);
 
-        Path p = Paths.get("D:\\Projects\\Java\\ADTGIT\\SetClient\\dictionary.txt");
+        Path p = Paths.get("D:\\Project_files\\ADTGIT\\SetClient\\dictionary.txt");
         BufferedReader reader = null;
         try {
             reader = Files.newBufferedReader(p);
@@ -56,15 +56,21 @@ class SpellChecker
             }
         }
     }
-//    public  SpellChecker() throws IOException, SetFullException
-//     {
-//        dictionary = new ArraySet<String>(100000);
+//    Set<String> dictionary = new ArraySet<String>(100000);
 //
-//        Path p = Paths.get("D:/desktop/dictionary.txt");
-//        BufferedReader reader = Files.newBufferedReader(p);
-//        String line = reader.readLine();
+//    Path p = Paths.get("D:/desktop/dictionary.txt");
+//    BufferedReader reader = Files.newBufferedReader(p);
+//    String line;
+//        while((line = reader.readLine()) !=null)
 //        dictionary.add(line);
-//    }
+//
+//    Scanner scan = new Scanner(System.in);
+//    String word = scan.nextLine();
+//        if (!dictionary.contains(word))  // must compare words!
+//        System.out.println("Incorrect spelling");
+//        else
+//                return word;
+//        return line;
     public static Set<String> Check(String word) throws SetFullException
     {
         Set<String> result= new ArraySet<>(100);
@@ -88,6 +94,8 @@ class SpellChecker
     }
     private static class MisspellingIterator<E>
     {
+        char[] alphabet = "abcdefghijklmnopqrstuvwxyz".toCharArray();
+
         private List<String> mispellings = new ArrayList<>();
         private int currIndex=-1;
         //Iterator<String> iter = mispellings.iterator();
@@ -96,19 +104,41 @@ class SpellChecker
         {
             mispellings.add(word);//fill misspelling
             AddExtraChar(word);
-            //DeleteOneChar(word);
-            //   ???
+            ReplaceChar(word);
+            DeleteChar(word);
+
+        }
+        private void ReplaceChar(String word)
+        {
+            for(char ch : alphabet)
+            {
+                for (int j = 0; j < word.length(); j++)
+                {
+                    mispellings.add(word.replace(word.charAt(j), ch));
+                }
+            }
 
         }
         private void AddExtraChar(String word)
         {
-            mispellings.add("a"+word);
+            StringBuilder str = new StringBuilder(word);
 
-            mispellings.add(word.substring(0,2)+"a"+word.substring(3));
-
-            mispellings.add(word+"a");
-
+            for(char ch : alphabet)
+            {
+                for (int j = 0; j < str.length(); j++)
+                {
+                    mispellings.add(str.insert(j, ch).toString());
+                }
+            }
         }
+        private void DeleteChar(String word)
+        {
+            char del = 0;
+
+            for (int i = 0; i < word.length(); i++)
+                mispellings.add(word.replace(word.charAt(i),del));
+        }
+
         public String Next()
         {
             if(hasNext())
