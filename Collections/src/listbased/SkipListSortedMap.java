@@ -3,7 +3,7 @@ package listbased;
 import ADT.AbstractSortedMap;
 import ADT.Position;
 import ADT.SkipList;
-import listbased.DoublyLinkedList;
+import listbased.LinkedPositionalList;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -24,8 +24,8 @@ public class SkipListSortedMap<K,V> extends AbstractSortedMap<K,V>
 
     class LinkedSkipList<E> implements SkipList<E>
     {
-        ArrayList <DoublyLinkedList<E>> horizontalLists;  // approx ln n
-        DoublyLinkedList<E>[] verticalLists;    // n+2
+        ArrayList <LinkedPositionalList<E>> horizontalLists;  // approx ln n
+        LinkedPositionalList<E>[] verticalLists;    // source.Length+2
         private Random rnd= new Random();
 
         public  LinkedSkipList(ArrayList<E> source)
@@ -35,12 +35,15 @@ public class SkipListSortedMap<K,V> extends AbstractSortedMap<K,V>
             //see Goodrich p.436
             E sentinel=null; //need to correct!!!
             int level =0;
-            DoublyLinkedList<E> hlBase=new DoublyLinkedList<E>();
-            DoublyLinkedList<E> hlAbove;
-            //fill hl with source
+            horizontalLists= new ArrayList<>();
+            LinkedPositionalList<E> hlBase=new LinkedPositionalList<E>();
+
+            LinkedPositionalList<E> hlAbove;
+            //fill hlBase with source and 2 sentinels
             hlBase.addFirst(sentinel);
             for(int i = 0; i < source.size(); i++) {hlBase.addLast(source.get(i));}
             hlBase.addLast(sentinel);
+            horizontalLists.add(hlBase);
 
             while(hlBase.size()>2) //including 2 sentinels
             {
@@ -51,24 +54,43 @@ public class SkipListSortedMap<K,V> extends AbstractSortedMap<K,V>
             }
 
             //generate verticalLists
-            verticalLists = new DoublyLinkedList[source.size()+2];
+            verticalLists = new LinkedPositionalList[source.size()+2];
 
-            x=horizontalLists.get(0).first();
-            while (x!=null)
+            //whole set of towers created under the base of 0-level get(0) through loop interation
+            LinkedPositionalList<E> basement=horizontalLists.get(0);
+            Position<E> towerElement = basement.first();
+            E x;
+            int i=0;
+            while (towerElement!=null)
             {
-                while() //x presents in horlist above
+                verticalLists[i]=new LinkedPositionalList<E>();
+                x = towerElement.getElement();
+                verticalLists[i].addFirst(x);
+
+                int stage=1;
+                //x presents in currentLevel
+                boolean present=false;
+                LinkedPositionalList<E> currentLevel=horizontalLists.get(stage);
+                Position<E> currentPosition=currentLevel.first();
+                while(currentPosition.getElement()!=x) {
+                    currentPosition=currentLevel.after(currentPosition);
+                }
+                !!!!!!!!!!!!!!!
+                while(present)
                 {
                     verticalLists[i].addLast(x);
+                    stage++;
                 }
-                x=horizontalLists.get(0).next();
+
+                towerElement=basement.after(towerElement);
             }
 
         }
-        private DoublyLinkedList<E> MakeLevelAbove(DoublyLinkedList<E> hlBase)
+        private LinkedPositionalList<E> MakeLevelAbove(LinkedPositionalList<E> hlBase)
         //fills level randomly with subset from hlBase
         //makes vertical links for towers
         {
-            DoublyLinkedList<E> levelAbove = new DoublyLinkedList<E>();
+            LinkedPositionalList<E> levelAbove = new LinkedPositionalList<E>();
             E aboveItem= sentinel;
             levelAbove.addFirst(sentinel);
             E baseItem=hlBase.first();
