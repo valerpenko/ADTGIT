@@ -38,8 +38,8 @@ class SpellChecker
     {
         dictionary = new ArraySet<String>(100000);
 
-        //Path p = Paths.get("D:\\Project_files\\ADTGIT\\SetClient\\dictionary.txt");
-        Path p = Paths.get("D:\\Projects\\Java\\ADTGIT\\SetClient\\dictionary.txt");
+        Path p = Paths.get("E:\\Project_files\\ADTGIT\\SetClient\\dictionary.txt");
+        //Path p = Paths.get("D:\\Projects\\Java\\ADTGIT\\SetClient\\dictionary.txt");
 
         BufferedReader reader = null;
         try {

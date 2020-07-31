@@ -75,7 +75,7 @@ public class SkipListSortedMap<K,V> extends AbstractSortedMap<K,V>
                 while(currentPosition.getElement()!=x) {
                     currentPosition=currentLevel.after(currentPosition);
                 }
-                !!!!!!!!!!!!!!!
+                //!!!!!!!!!!!!!!!
                 while(present)
                 {
                     verticalLists[i].addLast(x);
