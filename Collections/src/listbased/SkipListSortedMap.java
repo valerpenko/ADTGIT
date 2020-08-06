@@ -1,5 +1,6 @@
 package listbased;
 
+import ADT.AbstractMap;
 import ADT.AbstractSortedMap;
 import ADT.Position;
 import ADT.SkipList;
@@ -10,8 +11,8 @@ import java.util.Random;
 
 public class SkipListSortedMap<K,V> extends AbstractSortedMap<K,V>
 {
-    SkipList skipList=new LinkedSkipList();
-
+    SkipList skipList;
+    MapEntry <K,V> sentinel1, sentinel2;
     public int size() {
         return 0; //size is not implemented in ;
     }
@@ -19,6 +20,10 @@ public class SkipListSortedMap<K,V> extends AbstractSortedMap<K,V>
     @Override
     public V get(K key) {
         return null; //см. page 439 SkipSearch
+    }
+    public SkipListSortedMap(ArrayList<MapEntry<K,V>> source)
+    {
+        skipList=new LinkedSkipList(source);
     }
 
 
