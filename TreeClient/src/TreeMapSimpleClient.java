@@ -15,13 +15,13 @@ public class TreeMapSimpleClient
         tm.put(6, "guest");
         tm.put(1, "error");
 
-        System.out.println(tm.get(11));
+//        System.out.println(tm.get(11));
+//
+//        System.out.println(tm.higherEntry(7).getValue());
+//
+//        System.out.println(tm.lastEntry().getValue());
 
-        System.out.println(tm.higherEntry(7).getValue());
-
-        System.out.println(tm.lastEntry().getValue());
-
-        //tm.remove(11);
+        tm.remove(11);
 
         for(Entry<Integer,String> obj : tm.entrySet())
             System.out.println(obj.getKey());

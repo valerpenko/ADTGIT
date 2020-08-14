@@ -1,6 +1,7 @@
 package listbased;
 
 import ADT.AbstractSortedMap;
+import ADT.BinaryTree;
 import ADT.Entry;
 import ADT.Position;
 import java.util.ArrayList;
@@ -91,7 +92,6 @@ public class TreeMap<K,V> extends AbstractSortedMap<K,V>
     // To represent the underlying tree structure, we use a specialized subclass of the
     // LinkedBinaryTree class that we name BalanceableBinaryTree (see Section 11.2).
     protected BalanceableBinaryTree<K,V> tree = new BalanceableBinaryTree<>();
-
     // Constructs an empty map using the natural ordering of keys.
     public TreeMap()
     {
