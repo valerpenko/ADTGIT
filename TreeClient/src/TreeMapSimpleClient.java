@@ -1,11 +1,13 @@
 import ADT.Entry;
 import listbased.TreeMap;
+import listbased.TreeMap2;
 
 public class TreeMapSimpleClient
 {
     public static void main(String[] args)
     {
-        TreeMap<Integer,String> tm = new TreeMap<>();
+        //TreeMap<Integer,String> tm = new TreeMap<>();
+        TreeMap2<Integer,String> tm = new TreeMap2<>();
 
         tm.put(7,"bucket");
         tm.put(2,"paint");
