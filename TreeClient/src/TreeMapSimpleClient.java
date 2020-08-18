@@ -21,7 +21,7 @@ public class TreeMapSimpleClient
 
         System.out.println(tm.lastEntry().getValue());
 
-        tm.remove(11);
+        tm.remove(2);
 
         for(Entry<Integer,String> obj : tm.entrySet())
             System.out.println(obj.getKey());
