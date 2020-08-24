@@ -169,8 +169,10 @@ public class TreeMap<K, V> extends AbstractSortedMap<K, V>
 
             Position<Entry<K, V>> leaf = isExternal(left(position)) ? left(position) : right(position);
             Position<Entry<K, V>> sibling = sibling(leaf);
-            remove(leaf);
-            remove(position);               // sibling is promoted in p’s place
+            tree.remove(leaf);
+            //remove(leaf);
+            //remove(position);               // sibling is promoted in p’s place
+            tree.remove(position);
             rebalanceDelete(sibling);      // hook for balanced tree subclasses
             return old;
         }
