@@ -1,4 +1,6 @@
 import ADT.Entry;
+import listbased.AVLTreeMap;
+import listbased.SplayTreeMap;
 import listbased.TreeMap;
 import listbased.TreeMap2;
 
@@ -7,7 +9,9 @@ public class TreeMapSimpleClient
     public static void main(String[] args)
     {
         //TreeMap<Integer,String> tm = new TreeMap<>();
-        TreeMap2<Integer,String> tm = new TreeMap2<>();
+        //TreeMap2<Integer,String> tm = new TreeMap2<>();
+        //AVLTreeMap<Integer,String> tm = new AVLTreeMap<>();
+        SplayTreeMap<Integer,String> tm = new SplayTreeMap<>();
 
         tm.put(7,"bucket");
         tm.put(2,"paint");
@@ -23,7 +27,7 @@ public class TreeMapSimpleClient
 
         System.out.println(tm.lastEntry().getValue());
 
-        tm.remove(2);
+        //tm.remove(11);
 
         for(Entry<Integer,String> obj : tm.entrySet())
             System.out.println(obj.getKey());
