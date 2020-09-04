@@ -10,8 +10,8 @@ public class TreeMapSimpleClient
     {
         //TreeMap<Integer,String> tm = new TreeMap<>();
         //TreeMap2<Integer,String> tm = new TreeMap2<>();
-        //AVLTreeMap<Integer,String> tm = new AVLTreeMap<>();
-        SplayTreeMap<Integer,String> tm = new SplayTreeMap<>();
+        AVLTreeMap<Integer,String> tm = new AVLTreeMap<>();
+        // SplayTreeMap<Integer,String> tm = new SplayTreeMap<>();
 
         tm.put(7,"bucket");
         tm.put(2,"paint");
@@ -27,7 +27,7 @@ public class TreeMapSimpleClient
 
         System.out.println(tm.lastEntry().getValue());
 
-        //tm.remove(11);
+        tm.remove(12);
 
         for(Entry<Integer,String> obj : tm.entrySet())
             System.out.println(obj.getKey());
