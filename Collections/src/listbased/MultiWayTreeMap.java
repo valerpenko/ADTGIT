@@ -1,13 +1,13 @@
 package listbased;
 
 import ADT.AbstractSortedMap;
-import ADT.Tree;
+import ADT.AbstractTree;
+import ADT.Position;
+import arraybased.SortedTableMap;
+import ADT.Entry;
+import java.util.SortedMap;
 
-public class MultiWayTreeMap<K,V> extends AbstractSortedMap
+public class MultiwayTreeMap<K,V> extends AbstractSortedMap<K,V>
 {
-    private class _2_4_Tree  implements Tree
-    {
-
-    }
-
+    protected _2_4_Tree<K,V> tree =  new _2_4_Tree<>();
 }

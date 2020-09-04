@@ -5,6 +5,7 @@ import ADT.Entry;
 import ADT.Position;
 import arraybased.SortedTableMap;
 
+import java.util.Iterator;
 import java.util.SortedMap;
 
 public class _2_4_Tree<K,V> extends AbstractTree<SortedMap<K,V>>
@@ -43,12 +44,13 @@ public class _2_4_Tree<K,V> extends AbstractTree<SortedMap<K,V>>
 
         public MWTNode(){}
 
-        public MWTNode<K,V> getParent(){return parent;}
-        public int numEntries(){return entries.size();}
-        public int childrenCount(){return children.size();}
-
         public SortedMap<K,V> getElement() throws IllegalStateException { return (SortedMap<K,V>) entries; }
-        public SortedTableMap<K,V> getChildren(){return children;}
+
+        public MWTNode<K,V> getParent() {return parent;}
+        public int numEntries() {return entries.size();}
+        public int childrenCount() {return children.size();}
+
+        public SortedMap<K,V> getChildren(){return (SortedMap<K,V>) children;}
         public Entry <K,V> getEntry(K key) throws Exception {return itemSearch(key,'e');}
         public Entry <K,V> getChild(K key) throws Exception {return itemSearch(key,'c');}
 
@@ -70,10 +72,12 @@ public class _2_4_Tree<K,V> extends AbstractTree<SortedMap<K,V>>
         MWTNode<K,V> node = (MWTNode<K,V>) p; // safe cast
         if (node.getParent() == node) // our convention for defunct node
             throw new IllegalArgumentException("p is no longer in the tree");
+        //check range requirements
         return node;
     }
 
     public int size() { return size; }
+
     public Position<SortedMap<K,V>> root() { return root; }
 
     public Position<SortedMap<K,V>> parent(Position<SortedMap<K,V>> p) throws IllegalArgumentException
@@ -92,5 +96,13 @@ public class _2_4_Tree<K,V> extends AbstractTree<SortedMap<K,V>>
     {
         MWTNode<K,V> node = validate(p);
         return node.childrenCount();
+    }
+
+    public Iterator<SortedMap<K, V>> iterator() {
+        return null;
+    }
+
+    public Iterable<Position<SortedMap<K, V>>> positions() {
+        return null;
     }
 }
