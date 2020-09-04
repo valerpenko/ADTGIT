@@ -160,7 +160,7 @@ public class TreeMap<K, V> extends AbstractSortedMap<K, V>
             V old = position.getElement().getValue();
 
             // both children are internal
-            if (isInternal(left(position)) && isExternal(right(position)))
+            if (isInternal(left(position)) && isInternal(right(position)))
             {
                 Position<Entry<K, V>> replacement = treeMax(left(position));
                 set(position, replacement.getElement());
