@@ -4,21 +4,23 @@ import ADT.AbstractTree;
 import ADT.Entry;
 import ADT.Position;
 import arraybased.SortedTableMap;
+
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Iterator;
 import java.util.SortedMap;
 
 public class _2_4_Tree<K,V> extends AbstractTree<SortedMap<K,V>>
 {
-    private class MWTNode<K,V> implements Position<SortedMap<K,V>>
+    private class MWTNode<E> implements Position<ArrayList<E>>
     {
-        private MWTNode<K,V> parent;
+        private MWTNode<E> parent;
         private final int MinChildCount = 2;
         private final int MaxChildCount = 4;
-        private SortedTableMap<K,V> entries = new SortedTableMap<>();
-        private SortedTableMap<K,V> children = new SortedTableMap<>();
+        private ArrayList<E> entries = new ArrayList<>(3);
+        private ArrayList<E> children = new ArrayList<>();
 
-        protected Entry <K,V> itemSearch(K key, char ch) throws Exception
+        protected Entry <K,V> entrySearch(K key, char ch) throws Exception
         {
             if(ch == 'e')
             {
@@ -42,6 +44,7 @@ public class _2_4_Tree<K,V> extends AbstractTree<SortedMap<K,V>>
             }
             return null;
         }
+
 
         public MWTNode(){}
 
