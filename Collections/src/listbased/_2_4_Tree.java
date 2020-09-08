@@ -4,7 +4,7 @@ import ADT.AbstractTree;
 import ADT.Entry;
 import ADT.Position;
 import arraybased.SortedTableMap;
-
+import java.util.Comparator;
 import java.util.Iterator;
 import java.util.SortedMap;
 
@@ -17,6 +17,7 @@ public class _2_4_Tree<K,V> extends AbstractTree<SortedMap<K,V>>
         private final int MaxChildCount = 4;
         private SortedTableMap<K,V> entries = new SortedTableMap<>();
         private SortedTableMap<K,V> children = new SortedTableMap<>();
+
         protected Entry <K,V> itemSearch(K key, char ch) throws Exception
         {
             if(ch == 'e')
@@ -43,6 +44,8 @@ public class _2_4_Tree<K,V> extends AbstractTree<SortedMap<K,V>>
         }
 
         public MWTNode(){}
+
+        public MWTNode(K k, V v){entries.put(k,v);}
 
         public SortedMap<K,V> getElement() throws IllegalStateException { return (SortedMap<K,V>) entries; }
 
@@ -76,6 +79,24 @@ public class _2_4_Tree<K,V> extends AbstractTree<SortedMap<K,V>>
         return node;
     }
 
+    private K find(K key) throws Exception
+    {
+        MWTNode<K,V> curNode = root;
+        while(true)
+        {
+            if((curNode.itemSearch(key,'e') ).getKey() == key)
+                return key;
+            else if(isExternal(curNode))
+                return null;
+            else
+                curNode = curNode.getChild(key);
+        }
+    }
+
+    private void split(Position<SortedMap<K,V>> node){}
+
+    private void fusion(Position<SortedMap<K,V>> node1, Position<SortedMap<K,V>> node2){}
+
     public int size() { return size; }
 
     public Position<SortedMap<K,V>> root() { return root; }
@@ -98,11 +119,28 @@ public class _2_4_Tree<K,V> extends AbstractTree<SortedMap<K,V>>
         return node.childrenCount();
     }
 
-    public Iterator<SortedMap<K, V>> iterator() {
-        return null;
+    public Position<SortedMap<K,V>> insert(K key, V value)
+    {
+        if (isEmpty())
+        {
+            root = new MWTNode<>(key,value);
+            size = 1;
+            return root;
+        }
     }
 
-    public Iterable<Position<SortedMap<K, V>>> positions() {
-        return null;
+    public void delete(Position<SortedMap<K,V>> pos)
+    {}
+
+    private class ElementIterator implements Iterator<SortedMap<K,V>>
+    {
+        Iterator<Position<SortedMap<K,V>>> posIterator = positions().iterator();
+        public boolean hasNext() { return posIterator.hasNext(); }
+        public SortedMap<K,V> next() { return posIterator.next().getElement(); } // return element!
+        public void remove() { posIterator.remove(); }
     }
+
+    public Iterator<SortedMap<K, V>> iterator() { return new ElementIterator(); }
+
+    public Iterable<Position<SortedMap<K, V>>> positions() { return preorder(); }
 }
