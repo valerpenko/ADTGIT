@@ -3,88 +3,88 @@ package listbased;
 import ADT.AbstractTree;
 import ADT.Entry;
 import ADT.Position;
-import arraybased.SortedTableMap;
-import java.util.Comparator;
+import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.SortedMap;
 
-public class _2_4_Tree<K,V> extends AbstractTree<SortedMap<K,V>>
+public class _2_4_Tree<E> extends AbstractTree<E>
 {
-    private class MWTNode<K,V> implements Position<SortedMap<K,V>>
+    private class MWTNode<E> implements Position<ArrayList<E>>
     {
-        private MWTNode<K,V> parent;
+        private MWTNode<E> parent;
         private final int MinChildCount = 2;
         private final int MaxChildCount = 4;
-        private SortedTableMap<K,V> entries = new SortedTableMap<>();
-        private SortedTableMap<K,V> children = new SortedTableMap<>();
+        private ArrayList<E> entries = new ArrayList<>(3);
+        private ArrayList<MWTNode<E>> children = new ArrayList<>(4);
 
-        protected Entry <K,V> itemSearch(K key, char ch) throws Exception
+        protected E itemSearch(E item) throws Exception
         {
-            if(ch == 'e')
-            {
-                for(Entry <K,V> e: entries.entrySet())
+                for(E e: entries)
                 {
-                    if(e.getKey() == key)
+                    if(entries.contains(item))
                         return e;
-                    else if(e.getKey() == null)
+                    else
                         throw new Exception("Entry not found");
                 }
-            }
-            else if(ch == 'c')
+            return null;
+        }
+        protected MWTNode<E> childSearch(MWTNode<E> node) throws Exception
+        {
+            for(MWTNode<E> e: children)
             {
-                for(Entry <K,V> e: children.entrySet())
-                {
-                    if(e.getKey() == key)
-                        return e;
-                    else if(e.getKey() == null)
-                        throw new Exception("Entry not found");
-                }
+                if(children.contains(node))
+                    return e;
+                else
+                    throw new Exception("Entry not found");
             }
+
             return null;
         }
 
         public MWTNode(){}
 
-        public MWTNode(K k, V v){entries.put(k,v);}
+//        public MWTNode(K k, V v)
+//        {
+//            entries.put(k,v);
+//        }
 
-        public SortedMap<K,V> getElement() throws IllegalStateException { return (SortedMap<K,V>) entries; }
+        public  ArrayList<E> getElement() throws IllegalStateException { return entries; }
 
-        public MWTNode<K,V> getParent() {return parent;}
+        public MWTNode<E> getParent() {return parent;}
         public int numEntries() {return entries.size();}
         public int childrenCount() {return children.size();}
 
-        public SortedMap<K,V> getChildren(){return (SortedMap<K,V>) children;}
-        public Entry <K,V> getEntry(K key) throws Exception {return itemSearch(key,'e');}
-        public Entry <K,V> getChild(K key) throws Exception {return itemSearch(key,'c');}
+        public ArrayList<MWTNode<E>> getChildren(){return children;}
+        public E getEntry(E item) throws Exception {return itemSearch(item);}
+        public MWTNode<E> getChild(MWTNode<E> node) throws Exception {return childSearch(node);}
 
-        public void setParent(MWTNode<K,V> parentNode) { parent = parentNode; }
+        public void setParent(MWTNode<E> parentNode) { parent = parentNode; }
         public void addEntry(K key, V value){entries.put(key, value);}
         public void addChild(K key, V value){children.put(key, value);}
 
     }
 
-    private MWTNode<K,V> root = null;
+    private MWTNode<E> root = null;
     private int size = 0;
 
     public _2_4_Tree(){}
 
-    protected MWTNode<K,V> validate(Position<SortedMap<K,V>> p) throws IllegalArgumentException
+    protected MWTNode<E> validate(Position<ArrayList<E>> p) throws IllegalArgumentException
     {
         if (!(p instanceof MWTNode))
             throw new IllegalArgumentException("Not valid position type");
-        MWTNode<K,V> node = (MWTNode<K,V>) p; // safe cast
+        MWTNode<E> node = (MWTNode<E>) p; // safe cast
         if (node.getParent() == node) // our convention for defunct node
             throw new IllegalArgumentException("p is no longer in the tree");
         //check range requirements
         return node;
     }
 
-    private K find(K key) throws Exception
+    private K findKey(K key) throws Exception
     {
-        MWTNode<K,V> curNode = root;
+        MWTNode<Entry<K,V>> curNode = root;
         while(true)
         {
-            if((curNode.itemSearch(key,'e') ).getKey() == key)
+            if((curNode.itemSearch(key) ).getKey() == key)
                 return key;
             else if(isExternal(curNode))
                 return null;
@@ -93,33 +93,33 @@ public class _2_4_Tree<K,V> extends AbstractTree<SortedMap<K,V>>
         }
     }
 
-    private void split(Position<SortedMap<K,V>> node){}
+    private void split(Position<ArrayList<E>> node){}
 
-    private void fusion(Position<SortedMap<K,V>> node1, Position<SortedMap<K,V>> node2){}
+    private void fusion(Position<ArrayList<E>> node1, Position<ArrayList<E>> node2){}
 
     public int size() { return size; }
 
-    public Position<SortedMap<K,V>> root() { return root; }
+    public Position<E> root() { return (Position<E>) root; }
 
-    public Position<SortedMap<K,V>> parent(Position<SortedMap<K,V>> p) throws IllegalArgumentException
+    public Position<E> parent(Position<E> p) throws IllegalArgumentException
     {
-        MWTNode<K,V> node = validate(p);
-        return node.getParent();
+        MWTNode<E> node = validate((Position<ArrayList<E>>) p);
+        return (Position<E>) node.getParent();
     }
 
-    public Iterable<Position<SortedMap<K,V>>> children(Position<SortedMap<K, V>> p) throws IllegalArgumentException
+    public Iterable<Position<E>> children(Position<E> p) throws IllegalArgumentException
     {
-        MWTNode<K,V> node = validate(p);
-        return (Iterable<Position<SortedMap<K, V>>>) node.getChildren();
+        MWTNode<E> node = validate((Position<ArrayList<E>>) p);
+        return (Iterable<Position<E>>) node.getChildren();
     }
 
-    public int numChildren(Position<SortedMap<K,V>> p) throws IllegalArgumentException
+    public int numChildren(Position<E> p) throws IllegalArgumentException
     {
-        MWTNode<K,V> node = validate(p);
+        MWTNode<E> node = validate((Position<ArrayList<E>>) p);
         return node.childrenCount();
     }
 
-    public Position<SortedMap<K,V>> insert(K key, V value)
+    public Position<ArrayList<E>> insert(K key, V value)
     {
         if (isEmpty())
         {
@@ -129,18 +129,18 @@ public class _2_4_Tree<K,V> extends AbstractTree<SortedMap<K,V>>
         }
     }
 
-    public void delete(Position<SortedMap<K,V>> pos)
+    public void delete(Position<Position<ArrayList<E>>> pos)
     {}
 
-    private class ElementIterator implements Iterator<SortedMap<K,V>>
+    private class ElementIterator implements Iterator<ArrayList<E>>
     {
-        Iterator<Position<SortedMap<K,V>>> posIterator = positions().iterator();
+        Iterator<Position<E>> posIterator = positions().iterator();
         public boolean hasNext() { return posIterator.hasNext(); }
-        public SortedMap<K,V> next() { return posIterator.next().getElement(); } // return element!
+        public ArrayList<E> next() { return (ArrayList<E>) posIterator.next().getElement(); } // return element!
         public void remove() { posIterator.remove(); }
     }
 
-    public Iterator<SortedMap<K, V>> iterator() { return new ElementIterator(); }
+    public Iterator<E> iterator() { return (Iterator<E>) new ElementIterator(); }
 
-    public Iterable<Position<SortedMap<K, V>>> positions() { return preorder(); }
+    public Iterable<Position<E>> positions() { return preorder(); }
 }
