@@ -6,9 +6,9 @@ import ADT.Position;
 import java.util.ArrayList;
 import java.util.Iterator;
 
-public class _2_4_Tree<E> extends AbstractTree<E>
+public class _2_4_Tree<E extends Comparable<E>> extends AbstractTree<E>
 {
-    private class MWTNode<E> implements Position<ArrayList<E>>
+    private class MWTNode<E extends Comparable<E>> implements Position<ArrayList<E>>
     {
         private MWTNode<E> parent;
         private final int MinChildCount = 2;
@@ -16,28 +16,21 @@ public class _2_4_Tree<E> extends AbstractTree<E>
         private ArrayList<E> entries = new ArrayList<>(3);
         private ArrayList<MWTNode<E>> children = new ArrayList<>(4);
 
-        protected E itemSearch(E item) throws Exception
+        protected boolean itemSearch(E item) throws Exception
         {
                 for(E e: entries)
                 {
                     if(entries.contains(item))
-                        return e;
-                    else
-                        throw new Exception("Entry not found");
+                        return true;
                 }
-            return null;
+            return false;
         }
-        protected MWTNode<E> childSearch(MWTNode<E> node) throws Exception
+        protected MWTNode<E> childSearch(E entry) throws Exception
         {
-            for(MWTNode<E> e: children)
-            {
-                if(children.contains(node))
-                    return e;
-                else
-                    throw new Exception("Entry not found");
-            }
-
-            return null;
+            int childNum=0;
+            while( childNum< entries.size() && entries.get(childNum).compareTo(entry)==-1)
+                childNum++;
+            return children.get(childNum);
         }
 
         public MWTNode(){}
@@ -55,11 +48,13 @@ public class _2_4_Tree<E> extends AbstractTree<E>
 
         public ArrayList<MWTNode<E>> getChildren(){return children;}
         public E getEntry(E item) throws Exception {return itemSearch(item);}
-        public MWTNode<E> getChild(MWTNode<E> node) throws Exception {return childSearch(node);}
+        //public MWTNode<E> getChild(MWTNode<E> node) throws Exception {return childSearch(node);}
 
         public void setParent(MWTNode<E> parentNode) { parent = parentNode; }
-        public void addEntry(K key, V value){entries.put(key, value);}
-        public void addChild(K key, V value){children.put(key, value);}
+
+        public void addEntry(E entry){entries.add(entry);}
+
+        public void addChild(MWTNode<E> node) {children.add(node);}
 
     }
 
@@ -79,9 +74,15 @@ public class _2_4_Tree<E> extends AbstractTree<E>
         return node;
     }
 
-    private K findKey(K key) throws Exception
+    private boolean findKey(E entry) throws Exception
     {
-        MWTNode<Entry<K,V>> curNode = root;
+        MWTNode<E> curNode = root;
+        if (curNode.itemSearch(entry)) return true;
+        else
+        {
+            curNode=curNode.childSearch(entry);
+        }
+
         while(true)
         {
             if((curNode.itemSearch(key) ).getKey() == key)
