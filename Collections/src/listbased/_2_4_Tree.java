@@ -52,7 +52,17 @@ public class _2_4_Tree<E extends Comparable<E>> extends AbstractTree<E>
 
         public void setParent(MWTNode<E> parentNode) { parent = parentNode; }
 
-        public void addEntry(E entry){entries.add(entry);}
+        public void addEntry(E entry) throws Exception
+        {
+
+            if (numEntries()<3)
+            {
+                //!!!  sorted order
+                entries.add(entry);
+            }
+            else
+                throw new Exception();
+        }
 
         public void addChild(MWTNode<E> node) {children.add(node);}
 
@@ -74,27 +84,61 @@ public class _2_4_Tree<E extends Comparable<E>> extends AbstractTree<E>
         return node;
     }
 
-    private boolean findKey(E entry) throws Exception
+    private MWTNode<E> findEntry(E entry) throws Exception
     {
         MWTNode<E> curNode = root;
-        if (curNode.itemSearch(entry)) return true;
-        else
+        while (curNode.childrenCount()>0)    ///childrenCount!!!
         {
-            curNode=curNode.childSearch(entry);
-        }
-
-        while(true)
-        {
-            if((curNode.itemSearch(key) ).getKey() == key)
-                return key;
-            else if(isExternal(curNode))
-                return null;
-            else
-                curNode = curNode.getChild(key);
+            if (curNode.itemSearch(entry)) return true;
+            else {
+                curNode = curNode.childSearch(entry);
+            }
         }
     }
 
-    private void split(Position<ArrayList<E>> node){}
+    private void splitAndLift(MWTNode <E> node, E entry) throws Exception {
+        //split
+
+        //prepare 2 new splitted nodes
+        MWTNode<E> node1=new MWTNode<>();
+        MWTNode<E> node2=new MWTNode<>();
+        if(entry < node.entries.get(0))
+        {
+            node1(entry, get(0));
+            node2(get(3));
+        }
+        else if(entry < node.entries.get(2))
+        {
+            node1(get(0),entry );
+            node2(get(3));
+        }
+        else if(entry < node.entries.get(3))
+        {
+            node1(get(0),get(1));
+            node2(get(3));
+        }
+        else
+        {
+            node1(get(0),get(1));
+            node2(entry);
+        }
+        //get root
+        try {
+            root =node.root;
+        }
+        catch()
+        {// create new root
+
+
+        }
+
+
+        node1.addEntry(node.entries.get(0));
+        node1.addEntry(node.entries.get(1));
+        node1.addEntry(node.entries.get(3));
+        //lift
+
+    }
 
     private void fusion(Position<ArrayList<E>> node1, Position<ArrayList<E>> node2){}
 
@@ -120,13 +164,25 @@ public class _2_4_Tree<E extends Comparable<E>> extends AbstractTree<E>
         return node.childrenCount();
     }
 
-    public Position<ArrayList<E>> insert(K key, V value)
-    {
+    public Position<ArrayList<E>> insert(E entry) throws Exception {
         if (isEmpty())
         {
-            root = new MWTNode<>(key,value);
+            root = new MWTNode<>();
+            root.addEntry(entry);
             size = 1;
             return root;
+        }
+        else
+        {
+            MWTNode<E> curNode = findEntry(entry);
+            try
+            {
+                curNode.addEntry(entry);
+            }
+            catch (Exception e)
+            {
+                splitAndLift(curNode, entry);
+            }
         }
     }
 
