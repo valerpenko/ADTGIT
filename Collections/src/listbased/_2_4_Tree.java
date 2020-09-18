@@ -1,10 +1,11 @@
 package listbased;
 
 import ADT.AbstractTree;
-import ADT.Entry;
+import ADT.DefaultComparator;
 import ADT.Position;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.Comparator;
 
 public class _2_4_Tree<E extends Comparable<E>> extends AbstractTree<E>
 {
@@ -54,11 +55,13 @@ public class _2_4_Tree<E extends Comparable<E>> extends AbstractTree<E>
 
         public void addEntry(E entry) throws Exception
         {
+            Comparator<E> comp = new DefaultComparator<>();
 
             if (numEntries()<3)
             {
                 //!!!  sorted order
                 entries.add(entry);
+                entries.sort(comp);
             }
             else
                 throw new Exception();
@@ -100,30 +103,31 @@ public class _2_4_Tree<E extends Comparable<E>> extends AbstractTree<E>
         //split
 
         //prepare 2 new splitted nodes
-        MWTNode<E> node1=new MWTNode<>();
-        MWTNode<E> node2=new MWTNode<>();
-        if(entry < node.entries.get(0))
+        MWTNode<E> node1 = new MWTNode<>();
+        MWTNode<E> node2 = new MWTNode<>();
+        if(entry.compareTo(node.entries.get(0)) < 0)
         {
             node1(entry, get(0));
-            node2(get(3));
+            node2.getElement().get(3);
         }
-        else if(entry < node.entries.get(2))
+        else if(entry.compareTo(node.entries.get(2)) < 0)
         {
-            node1(get(0),entry );
-            node2(get(3));
+            node1(get(0),entry);
+            node2.getElement().get(3);
         }
-        else if(entry < node.entries.get(3))
+        else if(entry.compareTo(node.entries.get(3)) < 0)
         {
             node1(get(0),get(1));
-            node2(get(3));
+            node2.getElement().get(3);
         }
         else
         {
             node1(get(0),get(1));
-            node2(entry);
+            node2.(entry);
         }
         //get root
-        try {
+        try
+        {
             root =node.root;
         }
         catch()
@@ -131,8 +135,6 @@ public class _2_4_Tree<E extends Comparable<E>> extends AbstractTree<E>
 
 
         }
-
-
         node1.addEntry(node.entries.get(0));
         node1.addEntry(node.entries.get(1));
         node1.addEntry(node.entries.get(3));
