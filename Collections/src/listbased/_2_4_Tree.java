@@ -12,8 +12,8 @@ public class _2_4_Tree<E extends Comparable<E>> extends AbstractTree<E>
     private class MWTNode<E extends Comparable<E>> implements Position<ArrayList<E>>
     {
         private MWTNode<E> parent;
-        private final int MinChildCount = 2;
-        private final int MaxChildCount = 4;
+        private static final int MinChildCount = 2;
+        private static final int MaxChildCount = 4;
         private ArrayList<E> entries = new ArrayList<>(3);
         private ArrayList<MWTNode<E>> children = new ArrayList<>(4);
 
@@ -99,39 +99,40 @@ public class _2_4_Tree<E extends Comparable<E>> extends AbstractTree<E>
         }
     }
 
+    // splitAndLift performs after insertion of the entry in case when node consists of 4 entries
     private void splitAndLift(MWTNode <E> node, E entry) throws Exception {
         //split
 
         //prepare 2 new splitted nodes
         MWTNode<E> node1 = new MWTNode<>();
         MWTNode<E> node2 = new MWTNode<>();
-        if(entry.compareTo(node.entries.get(0)) < 0)
-        {
-            node1(entry, get(0));
-            node2.getElement().get(3);
-        }
-        else if(entry.compareTo(node.entries.get(2)) < 0)
-        {
-            node1(get(0),entry);
-            node2.getElement().get(3);
-        }
-        else if(entry.compareTo(node.entries.get(3)) < 0)
-        {
-            node1(get(0),get(1));
-            node2.getElement().get(3);
-        }
-        else
-        {
-            node1(get(0),get(1));
-            node2.(entry);
-        }
-        //get root
+        E entryToLift;
+
+        node1.addEntry(node.entries.get(0));
+        node1.addEntry(node.entries.get(1));
+        entryToLift=node.entries.get(2);
+        node2.addEntry(node.entries.get(3));
+
+        //get parent
         try
         {
-            root =node.root;
+            MWTNode<E> parent =node.getParent();
+            parent.addEntry(entryToLift);
+            int insertionPoint = parent.children.indexOf(node);
+            parent.children.remove(node);
+
+            parent.children.add(insertionPoint,node1);
+            parent.children.add(insertionPoint+1,node2);
+
+            if (parent.children.size()> MWTNode.MaxChildCount)
+            {
+                splitAndLift(parent, parent.entries.get(2));
+            }
+
         }
         catch()
         {// create new root
+
 
 
         }
