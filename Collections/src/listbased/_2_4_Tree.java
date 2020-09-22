@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Comparator;
 
-public class _2_4_Tree<E extends Comparable<E>> extends AbstractTree<E>
+public class _2_4_Tree<E extends Comparable<E>> //extends AbstractTree<E>
 {
     private class MWTNode<E extends Comparable<E>> implements Position<ArrayList<E>>
     {
@@ -76,7 +76,7 @@ public class _2_4_Tree<E extends Comparable<E>> extends AbstractTree<E>
 
     public _2_4_Tree(){}
 
-    protected MWTNode<E> validate(Position<ArrayList<E>> p) throws IllegalArgumentException
+    protected MWTNode<E> validate(MWTNode<E> p) throws IllegalArgumentException
     {
         if (!(p instanceof MWTNode))
             throw new IllegalArgumentException("Not valid position type");
@@ -114,32 +114,32 @@ public class _2_4_Tree<E extends Comparable<E>> extends AbstractTree<E>
         node2.addEntry(node.entries.get(3));
 
         //get parent
+        MWTNode<E> parent=new MWTNode<>(); //for new root
         try
         {
-            MWTNode<E> parent =node.getParent();
-            parent.addEntry(entryToLift);
-            int insertionPoint = parent.children.indexOf(node);
-            parent.children.remove(node);
-
-            parent.children.add(insertionPoint,node1);
-            parent.children.add(insertionPoint+1,node2);
-
-            if (parent.children.size()> MWTNode.MaxChildCount)
+            if (node==root)
             {
-                splitAndLift(parent, parent.entries.get(2));
+                parent.children.add(node1);
+                parent.children.add(node2);
+                parent.addEntry(entryToLift);
             }
+            else
+            {
+                parent = node.getParent();
 
+                int insertionPoint = parent.children.indexOf(node);
+                parent.children.remove(node);
+
+                parent.children.add(insertionPoint, node1);
+                parent.children.add(insertionPoint + 1, node2);
+
+                parent.addEntry(entryToLift);
+            }
         }
-        catch()
-        {// create new root
-
-
-
+        catch(Exception e)
+        {
+            splitAndLift(parent, parent.entries.get(2));
         }
-        node1.addEntry(node.entries.get(0));
-        node1.addEntry(node.entries.get(1));
-        node1.addEntry(node.entries.get(3));
-        //lift
 
     }
 
@@ -147,11 +147,11 @@ public class _2_4_Tree<E extends Comparable<E>> extends AbstractTree<E>
 
     public int size() { return size; }
 
-    public Position<E> root() { return (Position<E>) root; }
+    public MWTNode<E> root() { return root; }
 
     public Position<E> parent(Position<E> p) throws IllegalArgumentException
     {
-        MWTNode<E> node = validate((Position<ArrayList<E>>) p);
+        MWTNode<E> node = validate(p);
         return (Position<E>) node.getParent();
     }
 
