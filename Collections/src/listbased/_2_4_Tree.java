@@ -17,7 +17,7 @@ public class _2_4_Tree<E extends Comparable<E>> //extends AbstractTree<E>
         private ArrayList<E> entries = new ArrayList<>(3);
         private ArrayList<MWTNode<E>> children = new ArrayList<>(4);
 
-        protected boolean itemSearch(E item) throws Exception
+        protected boolean itemSearch(E item)
         {
                 for(E e: entries)
                 {
@@ -31,7 +31,10 @@ public class _2_4_Tree<E extends Comparable<E>> //extends AbstractTree<E>
             int childNum=0;
             while( childNum< entries.size() && entries.get(childNum).compareTo(entry)==-1)
                 childNum++;
-            return children.get(childNum);
+            if (childNum<children.size())
+                return children.get(childNum);
+            else
+                throw new Exception("Entry not found!");
         }
 
         public MWTNode(){}
@@ -90,17 +93,28 @@ public class _2_4_Tree<E extends Comparable<E>> //extends AbstractTree<E>
         return p;
     }
 
-    private MWTNode<E> findEntry(E entry) throws Exception
+    private MWTNode<E> findEntry(E entry, MWTNode<E> node) throws Exception
+    ///!!!рекурсия
+    /// если не найдет - Exception
     {
-        MWTNode<E> curNode = root;
+        MWTNode<E> curNode = node;
         while (curNode.childrenCount()>0)    ///childrenCount!!!
         {
-            if (curNode.itemSearch(entry)) return curNode;
+            if (curNode.itemSearch(entry)) break;
             else
             {
-                curNode = curNode.childSearch(entry);
+                try {
+                    curNode = curNode.childSearch(entry); break;
+                }
+                catch(Exception e)
+                {
+                    curNode
+                    continue;
+                }
+
             }
         }
+        return curNode;
     }
 
     // splitAndLift performs after insertion of the entry in case when node consists of 4 entries
@@ -144,7 +158,6 @@ public class _2_4_Tree<E extends Comparable<E>> //extends AbstractTree<E>
         {
             splitAndLift(parent, parent.entries.get(2));
         }
-
     }
 
     private void fusion(Position<ArrayList<E>> node1, Position<ArrayList<E>> node2){}
@@ -171,7 +184,9 @@ public class _2_4_Tree<E extends Comparable<E>> //extends AbstractTree<E>
         return node.childrenCount();
     }
 
-    public MWTNode<E> insert(E entry) throws Exception {
+    public MWTNode<E> insert(E entry) throws Exception
+    {
+
         if (this.size == 0)//isEmpty()
         {
             root = new MWTNode<>();
@@ -181,30 +196,32 @@ public class _2_4_Tree<E extends Comparable<E>> //extends AbstractTree<E>
         }
         else
         {
-            MWTNode<E> curNode = findEntry(entry);
+            MWTNode<E> curNode = findEntry(entry, root());
             try
             {
                 curNode.addEntry(entry);
+                return curNode;
             }
             catch (Exception e)
             {
                 splitAndLift(curNode, entry);
             }
         }
+        return new MWTNode<>();
     }
 
     public void delete(Position<Position<ArrayList<E>>> pos)
     {}
 
-    private class ElementIterator implements Iterator<ArrayList<E>>
-    {
-        Iterator<Position<E>> posIterator = positions().iterator();
-        public boolean hasNext() { return posIterator.hasNext(); }
-        public ArrayList<E> next() { return (ArrayList<E>) posIterator.next().getElement(); } // return element!
-        public void remove() { posIterator.remove(); }
-    }
-
-    public Iterator<E> iterator() { return (Iterator<E>) new ElementIterator(); }
-
-    public Iterable<Position<E>> positions() { return preorder(); }
+//    private class ElementIterator implements Iterator<ArrayList<E>>
+//    {
+//        Iterator<Position<E>> posIterator = positions().iterator();
+//        public boolean hasNext() { return posIterator.hasNext(); }
+//        public ArrayList<E> next() { return (ArrayList<E>) posIterator.next().getElement(); } // return element!
+//        public void remove() { posIterator.remove(); }
+//    }
+//
+//    public Iterator<E> iterator() { return (Iterator<E>) new ElementIterator(); }
+//
+//    public Iterable<Position<E>> positions() { return preorder(); }
 }
