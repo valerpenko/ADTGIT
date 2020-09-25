@@ -9,7 +9,7 @@ import java.util.Comparator;
 
 public class _2_4_Tree<E extends Comparable<E>> //extends AbstractTree<E>
 {
-    private class MWTNode<E extends Comparable<E>> implements Position<ArrayList<E>>
+    private class MWTNode<E extends Comparable<E>>// implements Position<ArrayList<E>>
     {
         private MWTNode<E> parent;
         private static final int MinChildCount = 2;
@@ -48,7 +48,11 @@ public class _2_4_Tree<E extends Comparable<E>> //extends AbstractTree<E>
         public int childrenCount() {return children.size();}
 
         public ArrayList<MWTNode<E>> getChildren(){return children;}
-        public E getEntry(E item) throws Exception {return itemSearch(item);}
+        public E getEntry(E item) throws Exception
+        {
+            if (itemSearch(item)) return item;
+            else throw new Exception("Entry not found");
+        }
         //public MWTNode<E> getChild(MWTNode<E> node) throws Exception {return childSearch(node);}
 
         public void setParent(MWTNode<E> parentNode) { parent = parentNode; }
@@ -78,13 +82,12 @@ public class _2_4_Tree<E extends Comparable<E>> //extends AbstractTree<E>
 
     protected MWTNode<E> validate(MWTNode<E> p) throws IllegalArgumentException
     {
-        if (!(p instanceof MWTNode))
+        if (p == null)
             throw new IllegalArgumentException("Not valid position type");
-        MWTNode<E> node = (MWTNode<E>) p; // safe cast
-        if (node.getParent() == node) // our convention for defunct node
+        if (p.getParent() == p) // our convention for defunct node
             throw new IllegalArgumentException("p is no longer in the tree");
         //check range requirements
-        return node;
+        return p;
     }
 
     private MWTNode<E> findEntry(E entry) throws Exception
@@ -92,8 +95,9 @@ public class _2_4_Tree<E extends Comparable<E>> //extends AbstractTree<E>
         MWTNode<E> curNode = root;
         while (curNode.childrenCount()>0)    ///childrenCount!!!
         {
-            if (curNode.itemSearch(entry)) return true;
-            else {
+            if (curNode.itemSearch(entry)) return curNode;
+            else
+            {
                 curNode = curNode.childSearch(entry);
             }
         }
@@ -149,26 +153,26 @@ public class _2_4_Tree<E extends Comparable<E>> //extends AbstractTree<E>
 
     public MWTNode<E> root() { return root; }
 
-    public Position<E> parent(Position<E> p) throws IllegalArgumentException
+    public MWTNode<E> parent(MWTNode<E> p) throws IllegalArgumentException
     {
         MWTNode<E> node = validate(p);
-        return (Position<E>) node.getParent();
+        return node.getParent();
     }
 
-    public Iterable<Position<E>> children(Position<E> p) throws IllegalArgumentException
+    public Iterable<MWTNode<E>> children(MWTNode<E> p) throws IllegalArgumentException
     {
-        MWTNode<E> node = validate((Position<ArrayList<E>>) p);
-        return (Iterable<Position<E>>) node.getChildren();
+        MWTNode<E> node = validate(p);
+        return node.getChildren();
     }
 
-    public int numChildren(Position<E> p) throws IllegalArgumentException
+    public int numChildren(MWTNode<E> p) throws IllegalArgumentException
     {
-        MWTNode<E> node = validate((Position<ArrayList<E>>) p);
+        MWTNode<E> node = validate(p);
         return node.childrenCount();
     }
 
-    public Position<ArrayList<E>> insert(E entry) throws Exception {
-        if (isEmpty())
+    public MWTNode<E> insert(E entry) throws Exception {
+        if (this.size == 0)//isEmpty()
         {
             root = new MWTNode<>();
             root.addEntry(entry);
