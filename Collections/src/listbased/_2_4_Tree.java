@@ -96,7 +96,7 @@ public class _2_4_Tree<E extends Comparable<E>> //extends AbstractTree<E>
 
     private MWTNode<E> findEntry(E entry, MWTNode<E> node) throws Exception
     ///!!!рекурсия
-    /// если не найдет - Exception
+    /// если не найдет - возвращает узел, на котором поиск завершился (туда будет добавляться entry)
     {
         MWTNode<E> curNode = node;
         while (curNode.childrenCount()>0)    ///childrenCount!!!
@@ -112,7 +112,6 @@ public class _2_4_Tree<E extends Comparable<E>> //extends AbstractTree<E>
                     curNode
                     continue;
                 }
-
             }
         }
         return curNode;
@@ -186,8 +185,8 @@ public class _2_4_Tree<E extends Comparable<E>> //extends AbstractTree<E>
     }
 
     public MWTNode<E> insert(E entry) throws Exception
+    //null if entry is already present
     {
-
         if (this.size == 0)//isEmpty()
         {
             root = new MWTNode<>();
@@ -197,15 +196,20 @@ public class _2_4_Tree<E extends Comparable<E>> //extends AbstractTree<E>
         }
         else
         {
-            for(MWTNode<E> treeNode : this.positions())
+            MWTNode<E> curNode = findEntry(entry, root());
+            for (E el:curNode.entries)
             {
-                MWTNode<E> curNode = findEntry(entry, root());
-                try {
-                    curNode.addEntry(entry);
-                    return curNode;
-                } catch (Exception e) {
-                    splitAndLift(curNode, entry);
-                }
+                if(el==entry) return null;
+            }
+            //we need perform insertion
+            try
+            {
+                curNode.addEntry(entry);
+                return curNode;
+            }
+            catch (Exception e)
+            {
+                splitAndLift(curNode, entry);
             }
         }
         return new MWTNode<>();
