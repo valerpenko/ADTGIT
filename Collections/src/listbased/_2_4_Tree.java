@@ -6,6 +6,7 @@ import ADT.Position;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Comparator;
+import java.util.List;
 
 public class _2_4_Tree<E extends Comparable<E>> //extends AbstractTree<E>
 {
@@ -196,15 +197,15 @@ public class _2_4_Tree<E extends Comparable<E>> //extends AbstractTree<E>
         }
         else
         {
-            MWTNode<E> curNode = findEntry(entry, root());
-            try
+            for(MWTNode<E> treeNode : this.positions())
             {
-                curNode.addEntry(entry);
-                return curNode;
-            }
-            catch (Exception e)
-            {
-                splitAndLift(curNode, entry);
+                MWTNode<E> curNode = findEntry(entry, root());
+                try {
+                    curNode.addEntry(entry);
+                    return curNode;
+                } catch (Exception e) {
+                    splitAndLift(curNode, entry);
+                }
             }
         }
         return new MWTNode<>();
@@ -213,15 +214,32 @@ public class _2_4_Tree<E extends Comparable<E>> //extends AbstractTree<E>
     public void delete(Position<Position<ArrayList<E>>> pos)
     {}
 
-//    private class ElementIterator implements Iterator<ArrayList<E>>
-//    {
-//        Iterator<Position<E>> posIterator = positions().iterator();
-//        public boolean hasNext() { return posIterator.hasNext(); }
-//        public ArrayList<E> next() { return (ArrayList<E>) posIterator.next().getElement(); } // return element!
-//        public void remove() { posIterator.remove(); }
-//    }
-//
-//    public Iterator<E> iterator() { return (Iterator<E>) new ElementIterator(); }
-//
-//    public Iterable<Position<E>> positions() { return preorder(); }
+    // Adds positions of the subtree rooted at Position p to the given snapshot.
+    private void preorderSubtree(MWTNode<E> p, List<MWTNode<E>> snapshot)
+    {
+        snapshot.add(p); // for preorder, we add position p before exploring subtrees
+        for (MWTNode<E> c : children(p))
+            preorderSubtree(c, snapshot);
+    }
+
+    // Returns an iterable collection of positions of the tree, reported in preorder.
+    public Iterable<MWTNode<E>> preorder()
+    {
+        List<MWTNode<E>> snapshot = new ArrayList<>();
+        if (this.size != 0)
+            preorderSubtree(root(), snapshot); // fill the snapshot recursively
+        return snapshot;
+    }
+
+    private class ElementIterator implements Iterator<ArrayList<E>>
+    {
+        Iterator<MWTNode<E>> posIterator = positions().iterator();
+        public boolean hasNext() { return posIterator.hasNext(); }
+        public ArrayList<E> next() { return posIterator.next().getElement(); } // return element!
+        public void remove() { posIterator.remove(); }
+    }
+
+    public Iterator<ArrayList<E>> iterator() { return new ElementIterator(); }
+
+    public Iterable<MWTNode<E>> positions() { return preorder(); }
 }
