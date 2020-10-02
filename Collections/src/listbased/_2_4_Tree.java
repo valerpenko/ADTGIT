@@ -79,6 +79,8 @@ public class _2_4_Tree<E extends Comparable<E>> //extends AbstractTree<E>
 
     }
 
+    //////////////////////////////////////////////////////////////////////
+
     private MWTNode<E> root = null;
     private int size = 0;
 
@@ -184,28 +186,34 @@ public class _2_4_Tree<E extends Comparable<E>> //extends AbstractTree<E>
         return node.childrenCount();
     }
 
-    public MWTNode<E> insert(E entry) throws Exception
+    public E insert(E entry) throws Exception //MWTNode<E>
     //null if entry is already present
     {
-        if (this.size == 0)//isEmpty()
+        if (this.size == 0)
         {
             root = new MWTNode<>();
             root.addEntry(entry);
             size = 1;
-            return root;
+            return entry;//return root;
         }
         else
         {
             MWTNode<E> curNode = findEntry(entry, root());
             for (E el:curNode.entries)
             {
-                if(el==entry) return null;
+                E old;
+                if(el==entry)
+                {
+                    old = curNode.getEntry(el);
+                    //!!!
+                    return old;//return null;
+                }
             }
             //we need perform insertion
             try
             {
                 curNode.addEntry(entry);
-                return curNode;
+                return entry; //curNode;
             }
             catch (Exception e)
             {
