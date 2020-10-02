@@ -27,15 +27,12 @@ public class _2_4_Tree<E extends Comparable<E>> //extends AbstractTree<E>
                 }
             return false;
         }
-        protected MWTNode<E> childSearch(E entry) throws Exception
+        protected MWTNode<E> childSearch(E entry)
         {
             int childNum=0;
             while( childNum< entries.size() && entries.get(childNum).compareTo(entry)==-1)
                 childNum++;
-            if (childNum<children.size())
-                return children.get(childNum);
-            else
-                throw new Exception("Entry not found!");
+            return children.get(childNum);
         }
 
         public MWTNode(){}
@@ -103,24 +100,15 @@ public class _2_4_Tree<E extends Comparable<E>> //extends AbstractTree<E>
         MWTNode<E> curNode = node;
         while (curNode.childrenCount()>0)    ///childrenCount!!!
         {
-            if (curNode.itemSearch(entry)) break;
-            else
-            {
-                try {
-                    curNode = curNode.childSearch(entry); break;
-                }
-                catch(Exception e)
-                {
-                    curNode
-                    continue;
-                }
-            }
+            if (curNode.itemSearch(entry)) return  curNode;
+            else curNode = curNode.childSearch(entry);
         }
-        return curNode;
+        throw new Exception();
     }
 
     // splitAndLift performs after insertion of the entry in case when node consists of 4 entries
-    private void splitAndLift(MWTNode <E> node, E entry) throws Exception {
+    private  MWTNode<E> splitAndLift(MWTNode <E> node, E entry) throws Exception
+    {
         //split
 
         //prepare 2 new splitted nodes
@@ -135,15 +123,16 @@ public class _2_4_Tree<E extends Comparable<E>> //extends AbstractTree<E>
 
         //get parent
         MWTNode<E> parent=new MWTNode<>(); //for new root
-        try
+        if (node==root)
         {
-            if (node==root)
-            {
-                parent.children.add(node1);
-                parent.children.add(node2);
-                parent.addEntry(entryToLift);
-            }
-            else
+            //parent here will be the new root
+            parent.children.add(node1);
+            parent.children.add(node2);
+            parent.addEntry(entryToLift);
+        }
+        else
+        {
+            try
             {
                 parent = node.getParent();
 
@@ -155,11 +144,16 @@ public class _2_4_Tree<E extends Comparable<E>> //extends AbstractTree<E>
 
                 parent.addEntry(entryToLift);
             }
+            catch(Exception e)
+            {
+                splitAndLift(parent, parent.entries.get(2));
+            }
         }
-        catch(Exception e)
-        {
-            splitAndLift(parent, parent.entries.get(2));
-        }
+        return findEntry(entry,root);
+        ///it is tremendously ineffective search trick!!!
+        ///instead of defining needed node between small number (probably 3) of nodes
+        //we run full tree search
+        //Task: given nodes parent, node1, node2 consider and return node containing entry
     }
 
     private void fusion(Position<ArrayList<E>> node1, Position<ArrayList<E>> node2){}
@@ -186,41 +180,40 @@ public class _2_4_Tree<E extends Comparable<E>> //extends AbstractTree<E>
         return node.childrenCount();
     }
 
-    public E insert(E entry) throws Exception //MWTNode<E>
-    //null if entry is already present
+    public MWTNode<E> insert(E entry) throws Exception
+    //if entry already presents in tree
+    // insertion is not comopleted, method returns node containing entry
+    //Otherwise insertion specified for 2_4_trees is completed
+    // and method returns tree node containing entry after its insertion
     {
         if (this.size == 0)
         {
             root = new MWTNode<>();
             root.addEntry(entry);
             size = 1;
-            return entry;//return root;
+            return root;
         }
         else
         {
             MWTNode<E> curNode = findEntry(entry, root());
             for (E el:curNode.entries)
             {
-                E old;
                 if(el==entry)
                 {
-                    old = curNode.getEntry(el);
-                    //!!!
-                    return old;//return null;
+                    return curNode;
                 }
             }
             //we need perform insertion
             try
             {
                 curNode.addEntry(entry);
-                return entry; //curNode;
+                return curNode;
             }
             catch (Exception e)
             {
-                splitAndLift(curNode, entry);
+                return splitAndLift(curNode, entry);
             }
         }
-        return new MWTNode<>();
     }
 
     public void delete(Position<Position<ArrayList<E>>> pos)
