@@ -12,5 +12,10 @@ public class _2_4_TreeTest
         tree.insert(15);
         tree.insert(11);
         tree.insert(26);
+        tree.insert(4);
+        tree.insert(3);
+
+        _2_4_Tree<ENtry
+
     }
 }

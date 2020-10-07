@@ -61,14 +61,10 @@ public class _2_4_Tree<E extends Comparable<E>> //extends AbstractTree<E>
         public void addEntry(E entry) throws Exception
         {
             Comparator<E> comp = new DefaultComparator<>();
-
-            if (numEntries()<3)
-            {
-                //!!!  sorted order
-                entries.add(entry);
-                entries.sort(comp);
-            }
-            else
+            //!!!  sorted order
+            entries.add(entry);
+            entries.sort(comp);
+            if (numEntries()>3)
                 throw new Exception();
         }
 
@@ -103,14 +99,14 @@ public class _2_4_Tree<E extends Comparable<E>> //extends AbstractTree<E>
             if (curNode.itemSearch(entry)) return  curNode;
             else curNode = curNode.childSearch(entry);
         }
-        throw new Exception();
+        return curNode;
+        //throw new Exception();
     }
 
     // splitAndLift performs after insertion of the entry in case when node consists of 4 entries
     private  MWTNode<E> splitAndLift(MWTNode <E> node, E entry) throws Exception
     {
         //split
-
         //prepare 2 new splitted nodes
         MWTNode<E> node1 = new MWTNode<>();
         MWTNode<E> node2 = new MWTNode<>();
@@ -129,6 +125,8 @@ public class _2_4_Tree<E extends Comparable<E>> //extends AbstractTree<E>
             parent.children.add(node1);
             parent.children.add(node2);
             parent.addEntry(entryToLift);
+            root=parent;
+            size+=1;
         }
         else
         {
@@ -211,6 +209,7 @@ public class _2_4_Tree<E extends Comparable<E>> //extends AbstractTree<E>
             }
             catch (Exception e)
             {
+                size+=1;
                 return splitAndLift(curNode, entry);
             }
         }
