@@ -123,7 +123,9 @@ public class _2_4_Tree<E extends Comparable<E>> //extends AbstractTree<E>
         {
             //parent here will be the new root
             parent.children.add(node1);
+            node1.setParent(parent);
             parent.children.add(node2);
+            node2.setParent(parent);
             parent.addEntry(entryToLift);
             root=parent;
             size+=1;
@@ -138,7 +140,10 @@ public class _2_4_Tree<E extends Comparable<E>> //extends AbstractTree<E>
                 parent.children.remove(node);
 
                 parent.children.add(insertionPoint, node1);
+                node1.setParent(parent);
+
                 parent.children.add(insertionPoint + 1, node2);
+                node2.setParent(parent);
 
                 parent.addEntry(entryToLift);
             }
