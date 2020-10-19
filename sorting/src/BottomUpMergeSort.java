@@ -17,8 +17,8 @@ public class BottomUpMergeSort
 //                System.out.println("First half");
 //                System.out.println(Arrays.toString(out));
             }
-        else
-        out[z++] = in[y++]; // take next from run 2
+            else
+                out[z++] = in[y++]; // take next from run 2
 //        System.out.println("Second half");
 //        System.out.println(Arrays.toString(out));
         if (x < end1) {System.arraycopy(in, x, out, z, end1 - x);
