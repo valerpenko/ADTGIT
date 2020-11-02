@@ -9,6 +9,7 @@
       <module fileurl="file://$PROJECT_DIR$/QueueClient/QueueClient.iml" filepath="$PROJECT_DIR$/QueueClient/QueueClient.iml" />
       <module fileurl="file://$PROJECT_DIR$/SetClient/SetClient.iml" filepath="$PROJECT_DIR$/SetClient/SetClient.iml" />
       <module fileurl="file://$PROJECT_DIR$/StackClient/StackClient.iml" filepath="$PROJECT_DIR$/StackClient/StackClient.iml" />
+      <module fileurl="file://$PROJECT_DIR$/TextProcessing/TextProcessing.iml" filepath="$PROJECT_DIR$/TextProcessing/TextProcessing.iml" />
       <module fileurl="file://$PROJECT_DIR$/TreeClient/TreeClient.iml" filepath="$PROJECT_DIR$/TreeClient/TreeClient.iml" />
       <module fileurl="file://$PROJECT_DIR$/sorting/sorting.iml" filepath="$PROJECT_DIR$/sorting/sorting.iml" />
     </modules>
