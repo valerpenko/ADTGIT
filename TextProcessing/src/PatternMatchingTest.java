@@ -8,6 +8,13 @@ public class PatternMatchingTest
         //int result = BruteForce.findBrute(text, pattern);
         int result = BoyerMoore.findBoyerMoore(text, pattern);
 
-        System.out.println(result);
+        //System.out.println(result);
+
+        String text1 = "abacaabaccabacabaabb";
+
+        int count = 0;
+        String template = "";
+        StringIteration.decompose(text1, count, template);
+        System.out.println(template);
     }
 }
