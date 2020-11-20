@@ -13,7 +13,7 @@ public class BoyerMoore
         for (int i=0; i < n; i++)
             last.put(text[i], - 1); // set − 1 as default for all text characters
         for (int k=0; k < m; k++)
-            last.put(pattern[k], k); // rightmost occurrence in pattern is last
+            last.put(pattern[k], k);     // rightmost occurrence in pattern is last
         // start with the end of the pattern aligned at index m − 1 of the text
         int i = m - 1; // an index into the text
         int k = m - 1; // an index into the pattern
