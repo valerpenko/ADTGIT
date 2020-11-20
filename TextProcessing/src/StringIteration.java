@@ -2,7 +2,9 @@ import java.util.Comparator;
 
 public class StringIteration
 {
-    public static void decompose(String str, int count, String template)
+    public static int count;
+    public static String template;
+    public static void decompose(String str)
     {
         template = Character.toString(str.charAt(0));
         count = 1;
@@ -25,8 +27,15 @@ public class StringIteration
             if(templatePos < template.length())
             {
                 template = str.substring(0, curPos+1);
+                if (template.length()>str.length()/2)
+                {
+                    template = str;
+                    count = 1;
+                    break;
+                }
                 count = 1;
-                curPos = templatePos;
+                //curPos = templatePos;
+                curPos++;
             }
             else
             {
@@ -35,6 +44,6 @@ public class StringIteration
             }
             //curPos++;
         }
-
+        count=count;
     }
 }
