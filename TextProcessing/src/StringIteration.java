@@ -26,7 +26,9 @@ public class StringIteration
             {
                 template = str.substring(0, curPos+1);
                 count = 1;
-                curPos = templatePos;
+                //curPos = templatePos;
+                curPos++;
+
             }
             else
             {
