@@ -5,16 +5,19 @@ public class PatternMatchingTest
         char[] text = "abacaabaccabacabaabb".toCharArray();
         char[] pattern = "abacab".toCharArray();
 
-        //int result = BruteForce.findBrute(text, pattern);
-        int result = BoyerMoore.findBoyerMoore(text, pattern);
+        int result;
+        result= BruteForce.findBrute(text, pattern);
+        System.out.println(result);
 
-        //System.out.println(result);
+        result = BoyerMoore.findBoyerMoore(text, pattern);
+        System.out.println(result);
 
-        String text1 = "abacaabaccabacabaabb";
-
-        int count = 0;
-        String template = "";
-        StringIteration.decompose(text1, count, template);
-        System.out.println(template);
+//        String text1 = "abcabcabc";
+//
+//        Integer count = 0;
+//        String template = "";
+//        StringIteration.decompose(text1);
+//        System.out.println( StringIteration.template);
+//        System.out.println( StringIteration.count);
     }
 }
