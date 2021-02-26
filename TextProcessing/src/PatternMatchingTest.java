@@ -9,8 +9,12 @@ public class PatternMatchingTest
         result= BruteForce.findBrute(text, pattern);
         System.out.println(result);
 
+        result = KMP.findKMP(text, pattern);
+        System.out.println(result);
+
         result = BoyerMoore.findBoyerMoore(text, pattern);
         System.out.println(result);
+
 
 //        String text1 = "abcabcabc";
 //

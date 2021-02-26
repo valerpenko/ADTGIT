@@ -28,8 +28,13 @@ public class Huffman
         for (Entry<Character, Integer> obj : map.entrySet())
             System.out.println(obj.getKey() + "-" + obj.getValue());
 
-        UnsortedPriorityQueue<Character, Integer> queue = new UnsortedPriorityQueue<>();
-
-        LinkedBinaryTree<Entry<Integer,Character>> charTree = new LinkedBinaryTree<>();
+        UnsortedPriorityQueue<Integer,LinkedBinaryTree<Entry<Character,Integer>>> queue
+                = new UnsortedPriorityQueue<>();
+        for (Entry<Character, Integer> obj : map.entrySet()) {
+            LinkedBinaryTree<Entry<Character,Integer>> charTree = new LinkedBinaryTree<>();
+            charTree.addRoot(obj);
+            queue.insert(obj.getValue(),charTree);
+        }
+        
     }
 }
