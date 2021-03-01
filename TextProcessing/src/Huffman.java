@@ -35,6 +35,6 @@ public class Huffman
             charTree.addRoot(obj);
             queue.insert(obj.getValue(),charTree);
         }
-        
+
     }
 }
