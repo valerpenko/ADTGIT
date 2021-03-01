@@ -42,12 +42,19 @@ public class Huffman
             Entry<Integer, LinkedBinaryTree<Entry<Character,Integer>>> entry1 = queue.removeMin();
             Entry<Integer, LinkedBinaryTree<Entry<Character,Integer>>> entry2 = queue.removeMin();
 
-            LinkedBinaryTree<LinkedBinaryTree<Entry<Character,Integer>>> tree
-                    = new LinkedBinaryTree<>();
+            LinkedBinaryTree<Entry<Character,Integer>> tree  = new LinkedBinaryTree<>();
 
-            Position<LinkedBinaryTree<Entry<Character, Integer>>> first = tree.addRoot(null);
-            tree.addLeft(first, entry1.getValue());
-            tree.addRight(first, entry2.getValue());
+            Position<Entry<Character, Integer>> first = tree.addRoot(null);
+            tree.addLeft(first, entry1.getValue().root().getElement());
+            tree.addRight(first, entry2.getValue().root().getElement());
+
+            UnsortedTableMap<Character, Integer> tmpMap = new UnsortedTableMap<>();
+            Integer val = entry1.getKey() + entry2.getKey();
+            map.put('~', val);
+
+            Entry<Character, Integer> rootEntry=map.entrySet().iterator().next();
+            tree.set(first,rootEntry);
+
             queue.insert(entry1.getKey() + entry2.getKey(), tree);
 
             Entry<Integer, LinkedBinaryTree<Entry<Character,Integer>>> entry3 = queue.removeMin();
