@@ -1,9 +1,13 @@
 
 import ADT.Entry;
 import ADT.Position;
+import ADT._Iterator;
 import arraybased.UnsortedTableMap;
 import listbased.LinkedBinaryTree;
 import listbased.UnsortedPriorityQueue;
+
+import java.util.Iterator;
+
 
 public class Huffman
 {
@@ -55,7 +59,13 @@ public class Huffman
             Entry<Character, Integer> rootEntry=map.entrySet().iterator().next();
             tree.set(first,rootEntry);
 
+            for(Entry<Character, Integer> node : tree)
+            {
+                System.out.println("char - " + node.getKey() + " freq - " + node.getValue());
+            }
+
             queue.insert(entry1.getKey() + entry2.getKey(), tree);
+//            queue.show();
 
             Entry<Integer, LinkedBinaryTree<Entry<Character,Integer>>> entry3 = queue.removeMin();
         }
