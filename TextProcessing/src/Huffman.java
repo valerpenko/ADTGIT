@@ -14,7 +14,7 @@ public class Huffman
     public static void main(String[] args)
     {
         UnsortedTableMap<Character, Integer> map = new UnsortedTableMap<>();
-        String s = "Unsorted Priority Queue";
+        String s = "a fast runner need never be afraid of the dark";
         for (int i = 0; i < s.length(); i++)
         {
             //take each character
@@ -54,21 +54,22 @@ public class Huffman
 
             UnsortedTableMap<Character, Integer> tmpMap = new UnsortedTableMap<>();
             Integer val = entry1.getKey() + entry2.getKey();
-            map.put('~', val);
+            tmpMap.put('~', val);
 
-            Entry<Character, Integer> rootEntry=map.entrySet().iterator().next();
+            Entry<Character, Integer> rootEntry=tmpMap.entrySet().iterator().next();
             tree.set(first,rootEntry);
+            System.out.println(val);
 
-            for(Entry<Character, Integer> node : tree)
-            {
-                System.out.println("char - " + node.getKey() + " freq - " + node.getValue());
-            }
+//            for(Entry<Character, Integer> node : tree)
+//            {
+//                System.out.println("char - " + node.getKey() + " freq - " + node.getValue());
+//            }
 
             queue.insert(entry1.getKey() + entry2.getKey(), tree);
 //            queue.show();
-
-            Entry<Integer, LinkedBinaryTree<Entry<Character,Integer>>> entry3 = queue.removeMin();
         }
+        Entry<Integer, LinkedBinaryTree<Entry<Character,Integer>>> entry3 = queue.removeMin();
+
 //        return tree;
     }
 }
