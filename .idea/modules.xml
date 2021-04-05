@@ -4,6 +4,7 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/ADTGIT.iml" filepath="$PROJECT_DIR$/ADTGIT.iml" />
       <module fileurl="file://$PROJECT_DIR$/Collections/Collections.iml" filepath="$PROJECT_DIR$/Collections/Collections.iml" />
+      <module fileurl="file://$PROJECT_DIR$/GraphClient/GraphClient.iml" filepath="$PROJECT_DIR$/GraphClient/GraphClient.iml" />
       <module fileurl="file://$PROJECT_DIR$/ListClient/ListClient.iml" filepath="$PROJECT_DIR$/ListClient/ListClient.iml" />
       <module fileurl="file://$PROJECT_DIR$/MapClient/MapClient.iml" filepath="$PROJECT_DIR$/MapClient/MapClient.iml" />
       <module fileurl="file://$PROJECT_DIR$/QueueClient/QueueClient.iml" filepath="$PROJECT_DIR$/QueueClient/QueueClient.iml" />
