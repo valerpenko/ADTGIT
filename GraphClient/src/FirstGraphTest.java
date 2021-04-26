@@ -14,29 +14,36 @@ public class FirstGraphTest
 {
     public static void main(String[] args) throws SetFullException
     {
-        AdjacencyMapGraph<String,Integer> graph = new AdjacencyMapGraph<>(true);
+        AdjacencyMapGraph<String,String> graph = new AdjacencyMapGraph<>(true);
 
         Vertex<String> cityA = graph.insertVertex("city A");
         Vertex<String> cityB = graph.insertVertex("city B");
         Vertex<String> cityC = graph.insertVertex("city C");
         Vertex<String> cityD = graph.insertVertex("city D");
 
-        Edge<Integer> AB = graph.insertEdge(cityA, cityB, 153);
-        Edge<Integer> BC = graph.insertEdge(cityB, cityC, 335);
-        Edge<Integer> CD = graph.insertEdge(cityC, cityD, 671);
-        Edge<Integer> DA = graph.insertEdge(cityD, cityA, 560);
-        Edge<Integer> DB = graph.insertEdge(cityD, cityB, 263);
+        Edge<String> AB = graph.insertEdge(cityA, cityB, "AB");
+        Edge<String> BC = graph.insertEdge(cityB, cityC, "BC");
+        Edge<String> CD = graph.insertEdge(cityC, cityD, "CD");
+        Edge<String> DA = graph.insertEdge(cityD, cityA, "DA");
+        Edge<String> DB = graph.insertEdge(cityD, cityB, "DB");
 
 
 
         Set <Vertex<String>> known = new HashSet<>();
-        known.add(cityA);
-        Map<Vertex<String>, Edge<Integer>> forest = new ProbeHashMap<>();
-        forest.put(cityA, AB);
-        GraphTraversals.DFS(graph, cityA, known, forest);
+        //known.add(cityA);
+        Map<Vertex<String>, Edge<String>> forest = new ProbeHashMap<>();
+        //forest.put(cityA, AB);
+        GraphTraversals.DFS(graph, cityD, known, forest);
 
-        Map<Vertex<String>, Edge<Integer>> result = GraphTraversals.DFSComplete(graph);
+        for(Vertex<String> v : known)
+        {
+            try {
+                System.out.println(forest.get(v).getElement());
+            } catch (Exception e){System.out.println("Null");}
+        }
 
-        System.out.println(result.entrySet());
+        Map<Vertex<String>, Edge<String>> result = GraphTraversals.DFSComplete(graph);
+
+        //System.out.println(result.entrySet());
     }
 }
