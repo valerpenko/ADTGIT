@@ -21,11 +21,16 @@ public class FirstGraphTest
         Vertex<String> cityC = graph.insertVertex("city C");
         Vertex<String> cityD = graph.insertVertex("city D");
 
+        Vertex<String> cityE = graph.insertVertex("city E");
+        Vertex<String> cityF = graph.insertVertex("city F");
+
         Edge<String> AB = graph.insertEdge(cityA, cityB, "AB");
         Edge<String> BC = graph.insertEdge(cityB, cityC, "BC");
         Edge<String> CD = graph.insertEdge(cityC, cityD, "CD");
         Edge<String> DA = graph.insertEdge(cityD, cityA, "DA");
         Edge<String> DB = graph.insertEdge(cityD, cityB, "DB");
+
+        Edge<String> EF = graph.insertEdge(cityE, cityF, "EF");
 
 
 
@@ -43,7 +48,7 @@ public class FirstGraphTest
         }
 
         Map<Vertex<String>, Edge<String>> result = GraphTraversals.DFSComplete(graph);
-
-        //System.out.println(result.entrySet());
+        int connectedComp = graph.numVertices() - result.size();
+        System.out.println(connectedComp);
     }
 }
