@@ -1,7 +1,4 @@
-import ADT.Edge;
-import ADT.Entry;
-import ADT.Map;
-import ADT.Vertex;
+import ADT.*;
 import Exceptions.SetFullException;
 import arraybased.ProbeHashMap;
 import listbased.AdjacencyMapGraph;
@@ -38,7 +35,8 @@ public class FirstGraphTest
         //known.add(cityA);
         Map<Vertex<String>, Edge<String>> forest = new ProbeHashMap<>();
         //forest.put(cityA, AB);
-        GraphTraversals.DFS(graph, cityD, known, forest);
+        GraphTraversals.BFS(graph, cityA, known, forest);
+        //GraphTraversals.DFS(graph, cityD, known, forest);
 
         for(Vertex<String> v : known)
         {
@@ -50,5 +48,8 @@ public class FirstGraphTest
         Map<Vertex<String>, Edge<String>> result = GraphTraversals.DFSComplete(graph);
         int connectedComp = graph.numVertices() - result.size();
         System.out.println(connectedComp);
+
+        PositionalList<Edge<String>>  path = GraphTraversals.constructPath(graph, cityA, cityC, forest);
+        System.out.println(path);
     }
 }
