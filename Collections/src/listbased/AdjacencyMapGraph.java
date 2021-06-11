@@ -6,11 +6,11 @@ import arraybased.ProbeHashMap;
 public class AdjacencyMapGraph<V,E> implements Graph<V,E>
 {
     // A vertex of an adjacency map graph representation.
-    private class InnerVertex<V> implements Vertex<V>
+    private class InnerVertex<V> Map<Vertex<V>,implements Vertex<V>
     {
         private V element;
         private Position<Vertex<V>> pos;
-        private Map<Vertex<V>, Edge<E>> outgoing, incoming;
+        private  Edge<E>> outgoing, incoming;
         // Constructs a new InnerVertex instance storing the given element.
         public InnerVertex(V elem, boolean graphIsDirected)
         {

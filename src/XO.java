@@ -1,25 +1,9 @@
 import java.util.Arrays;
 
-public class XO
+class XOModel {
+}
+class XOView
 {
-    public static void main(String[] args)
-    {
-        int X = 1;
-        int O = 0;
-        int Empty = -1;
-
-        int [][] Board = {{Empty,Empty,Empty},
-                          {Empty,Empty,Empty},
-                          {Empty,Empty,Empty}};
-
-        for (int[] row : Board)
-            System.out.println(Arrays.toString(row));
-
-        Show(Board);
-    }
-
-
-
     public static void Show(int [][] Board)
     {
         for (int[] row : Board)
@@ -41,5 +25,19 @@ public class XO
             }
         }
     }
+}
+public class XO {
+    public static void main(String[] args) {
+        int X = 1;
+        int O = 0;
+        int Empty = -1;
 
+        int[][] Board = {{Empty, Empty, Empty},
+                {Empty, Empty, Empty},
+                {Empty, Empty, Empty}};
+
+        //for (int[] row : Board)
+        System.out.println(Arrays.toString(Board));
+        Show(Board);
+    }
 }
