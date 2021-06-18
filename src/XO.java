@@ -1,6 +1,11 @@
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.Arrays;
 enum XOCell {X,O,Empty}
 enum XOStatus {XWin,OWin,Draw,Continue}
+
 class XOModel
 {
     XOCell[][] board;
@@ -46,42 +51,73 @@ class XOModel
     private boolean victory(boolean player)
     {return true;}
 }
+
 class XOView
 {
-    public static void Show(int [][] Board)
+    JButton [][] buttons;
+    JFrame fr;
+
+    XOView(XOModel mod)
     {
-        for (int[] row : Board)
+        fr = new JFrame();
+        fr.setSize(400,400);
+        fr.setLayout(new GridLayout(mod.height, mod.width));
+        fr.setDefaultCloseOperation(fr.EXIT_ON_CLOSE);
+
+        buttons = new JButton[mod.height][mod.width];
+
+        for (JButton[] row : buttons)
         {
-            for (int cell : row)
+            for (JButton cell : row)
+
             {
-                if (cell == 1)
+                cell = new JButton();
+                JButton finalCell = cell;
+                cell.addActionListener(new ActionListener()
                 {
-                    System.out.println("X");
-                }
-                else if (cell == 0)
-                {
-                    System.out.println("O");
-                }
-                else
-                {
-                    System.out.println("_");
-                }
+                    public void actionPerformed(ActionEvent e)
+                    {
+//                    mod.Move(0,0);
+                        if(mod.XTurn) { finalCell.setText("X"); }
+                        else{ finalCell.setText("O"); }
+                    }
+                });
+                fr.add(cell);
+            }
+        }
+
+        fr.setVisible(true);
+
+    }
+    public  void Check()
+    {
+        for (int i = 0; i < buttons.length; i++)
+        {
+            for (int j = 0; j < buttons[i].length; j++)
+            {
+
             }
         }
     }
 }
-public class XO {
-    public static void main(String[] args) {
-        int X = 1;
-        int O = 0;
-        int Empty = -1;
 
-        int[][] Board = {{Empty, Empty, Empty},
-                {Empty, Empty, Empty},
-                {Empty, Empty, Empty}};
 
-        //for (int[] row : Board)
-        System.out.println(Arrays.toString(Board));
-        //Show(Board);
+public class XO
+{
+    public static void main(String[] args)
+    {
+        XOModel model = new XOModel();
+        XOView view = new XOView(model);
+//        int X = 1;
+//        int O = 0;
+//        int Empty = -1;
+//
+//        int[][] Board = {{Empty, Empty, Empty},
+//                {Empty, Empty, Empty},
+//                {Empty, Empty, Empty}};
+//
+//        //for (int[] row : Board)
+//        System.out.println(Arrays.toString(Board));
+//        //Show(Board);
     }
 }
