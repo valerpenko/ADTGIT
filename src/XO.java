@@ -8,7 +8,7 @@ enum XOStatus {XWin,OWin,Draw,Continue}
 
 class XOModel
 {
-    XOCell[][] board;
+    private XOCell[][] board;
     boolean XTurn;
     int moveCount;
     int height;
@@ -17,6 +17,10 @@ class XOModel
     {
         height = h; width = w;
         board=new XOCell[height][width];
+        for(int row=0;row<height;row++)
+            for(int col=0;col<width;col++)
+                board[row][col]=XOCell.Empty;
+
         XTurn=true;
         moveCount=0;
     }
@@ -47,18 +51,26 @@ class XOModel
         else {return XOStatus.Continue;}
 
     }
-
+    public XOCell GetCell(int row, int col)
+    {
+        return board[row][col];
+    }
     private boolean victory(boolean player)
-    {return true;}
+    {
+        //8 проверок
+        return true;
+    }
 }
 
 class XOView
 {
     JButton [][] buttons;
     JFrame fr;
+    XOModel xoModel;
 
     XOView(XOModel mod)
     {
+        xoModel=mod;
         fr = new JFrame();
         fr.setSize(400,400);
         fr.setLayout(new GridLayout(mod.height, mod.width));
@@ -66,28 +78,57 @@ class XOView
 
         buttons = new JButton[mod.height][mod.width];
 
-        for (JButton[] row : buttons)
+        for (int row = 0;  row< buttons.length; row++)
         {
-            for (JButton cell : row)
-
+            for (int col = 0; col < buttons[row].length; col++)
             {
-                cell = new JButton();
-                JButton finalCell = cell;
-                cell.addActionListener(new ActionListener()
+                buttons[row][col] = new JButton();
+                JButton finalCell = buttons[row][col];
+                int finalRow = row;
+                int finalCol = col;
+                buttons[row][col].addActionListener(new ActionListener()
                 {
                     public void actionPerformed(ActionEvent e)
                     {
-//                    mod.Move(0,0);
-                        if(mod.XTurn) { finalCell.setText("X"); }
-                        else{ finalCell.setText("O"); }
+                        mod.Move(finalRow, finalCol);
+                        //if(xoModel.XTurn) { finalCell.setText("X"); }
+                        //else{ finalCell.setText("O"); }
+                        Refresh();
+                        switch (mod.GameStatus())
+                        {
+                            case Continue:
+                                break;
+                            case Draw:
+                                //fr.set
+                                break;
+                            case XWin:
+                                break;
+                            case OWin:
+                                break;
+                        }
                     }
                 });
-                fr.add(cell);
+                fr.add(buttons[row][col]);
             }
         }
-
+        Refresh();
         fr.setVisible(true);
-
+    }
+    void Refresh()
+    {
+        for (int row = 0;  row< buttons.length; row++) {
+            for (int col = 0; col < buttons[row].length; col++) {
+                switch (xoModel.GetCell(row,col))
+                {
+                    case X:
+                        buttons[row][col].setText("X");break;
+                    case O:
+                        buttons[row][col].setText("O");break;
+                    default:
+                        buttons[row][col].setText("");break;
+                }
+            }
+        }
     }
     public  void Check()
     {
