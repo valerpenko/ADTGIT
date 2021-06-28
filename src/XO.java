@@ -57,8 +57,32 @@ class XOModel
     }
     private boolean victory(boolean player)
     {
+        if((board[0][0] == XOCell.X && board[0][1] == XOCell.X && board[0][2] == XOCell.X) ||
+                (board[0][0] == XOCell.O && board[0][1] == XOCell.O && board[0][2] == XOCell.O))
+            return true;
+        else if ((board[1][0] == XOCell.X && board[1][1] == XOCell.X && board[1][2] == XOCell.X) ||
+                (board[1][0] == XOCell.O && board[1][1] == XOCell.O && board[1][2] == XOCell.O))
+            return true;
+        else if ((board[2][0] == XOCell.X && board[2][1] == XOCell.X && board[2][2] == XOCell.X) ||
+                (board[2][0] == XOCell.O && board[2][1] == XOCell.O && board[2][2] == XOCell.O))
+            return true;
+        else if((board[0][0] == XOCell.X && board[1][0] == XOCell.X && board[2][0] == XOCell.X) ||
+                (board[0][0] == XOCell.O && board[1][0] == XOCell.O && board[2][0] == XOCell.O))
+            return true;
+        else if ((board[0][1] == XOCell.X && board[1][1] == XOCell.X && board[2][1] == XOCell.X) ||
+                (board[0][1] == XOCell.O && board[1][1] == XOCell.O && board[2][1] == XOCell.O))
+            return true;
+        else if ((board[0][2] == XOCell.X && board[1][2] == XOCell.X && board[2][2] == XOCell.X) ||
+                (board[0][2] == XOCell.O && board[1][2] == XOCell.O && board[2][2] == XOCell.O))
+            return true;
+        else if ((board[0][0] == XOCell.X && board[1][1] == XOCell.X && board[2][2] == XOCell.X) ||
+                (board[0][0] == XOCell.O && board[1][1] == XOCell.O && board[2][2] == XOCell.O))
+            return true;
+        else if ((board[0][2] == XOCell.X && board[1][1] == XOCell.X && board[2][0] == XOCell.X) ||
+                (board[0][2] == XOCell.O && board[1][2] == XOCell.O && board[2][0] == XOCell.O))
+            return true;
         //8 проверок
-        return true;
+        return false;
     }
 }
 
