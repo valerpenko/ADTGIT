@@ -46,9 +46,9 @@ class XOModel
         }
         if(moveCount < height*width)
         {
-            return XOStatus.Draw;
+            return XOStatus.Continue;
         }
-        else {return XOStatus.Continue;}
+        else {return XOStatus.Draw;}
 
     }
     public XOCell GetCell(int row, int col)
@@ -109,21 +109,22 @@ class XOView
                 {
                     public void actionPerformed(ActionEvent e)
                     {
-                        mod.Move(finalRow, finalCol);
-                        //if(xoModel.XTurn) { finalCell.setText("X"); }
-                        //else{ finalCell.setText("O"); }
-                        Refresh();
-                        switch (mod.GameStatus())
+                        XOStatus status=mod.GameStatus();
+                        if (status==XOStatus.Continue)
                         {
-                            case Continue:
-                                break;
-                            case Draw:
-                                //fr.set
-                                break;
-                            case XWin:
-                                break;
-                            case OWin:
-                                break;
+                            mod.Move(finalRow, finalCol);
+                            Refresh();
+                        }
+                        else {
+                            switch (mod.GameStatus()) {
+                                case Draw:
+                                    //fr.set
+                                    break;
+                                case XWin:
+                                    break;
+                                case OWin:
+                                    break;
+                            }
                         }
                     }
                 });
@@ -146,16 +147,6 @@ class XOView
                     default:
                         buttons[row][col].setText("");break;
                 }
-            }
-        }
-    }
-    public  void Check()
-    {
-        for (int i = 0; i < buttons.length; i++)
-        {
-            for (int j = 0; j < buttons[i].length; j++)
-            {
-
             }
         }
     }
