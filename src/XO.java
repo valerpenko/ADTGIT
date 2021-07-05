@@ -109,7 +109,9 @@ class XOView
                 {
                     public void actionPerformed(ActionEvent e)
                     {
+
                         XOStatus status=mod.GameStatus();
+
                         if (status==XOStatus.Continue)
                         {
                             mod.Move(finalRow, finalCol);
