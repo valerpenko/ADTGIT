@@ -159,7 +159,7 @@ public class XO
 {
     public static void main(String[] args)
     {
-        XOModel model = new XOModel();
+        XOModel model = new XOModel(6,6);
         XOView view = new XOView(model);
 //        int X = 1;
 //        int O = 0;
