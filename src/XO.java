@@ -37,15 +37,18 @@ class XOModel
         }
     }
     public  XOStatus GameStatus()
-    {
-        if (victory(XTurn)) {
-            if (XTurn)
+    {//if (if state not changed see moveCount)
+        //return oldStatus
+        //else
+        if (victory(!XTurn)) {
+            if (!XTurn)
                 return XOStatus.XWin;
             else
                 return XOStatus.OWin;
         }
         if(moveCount < height*width)
         {
+            //oldStatus = XOStatus.Continue
             return XOStatus.Continue;
         }
         else {return XOStatus.Draw;}
@@ -94,9 +97,8 @@ class XOView
         fr.setSize(400,400);
         fr.setLayout(new GridLayout(mod.height, mod.width));
         fr.setDefaultCloseOperation(fr.EXIT_ON_CLOSE);
-
+        fr.setTitle("Continue");
         buttons = new JButton[mod.height][mod.width];
-
         for (int row = 0;  row< buttons.length; row++)
         {
             for (int col = 0; col < buttons[row].length; col++)
@@ -109,24 +111,25 @@ class XOView
                 {
                     public void actionPerformed(ActionEvent e)
                     {
-
-                        XOStatus status=mod.GameStatus();
-
-                        if (status==XOStatus.Continue)
-                        {
+                        if(mod.GameStatus() == XOStatus.Continue) {
                             mod.Move(finalRow, finalCol);
-                            Refresh();
-                        }
-                        else {
-                            switch (mod.GameStatus()) {
-                                case Draw:
-                                    //fr.set
-                                    break;
-                                case XWin:
-                                    break;
-                                case OWin:
-                                    break;
+                            XOStatus status = mod.GameStatus();
+                            if (status == XOStatus.Continue) { //mod.Move(finalRow, finalCol);
+                                //Refresh();
+                            } else {
+                                switch (mod.GameStatus()) {
+                                    case Draw:
+                                        fr.setTitle("Draw");
+                                        break;
+                                    case XWin:
+                                        fr.setTitle("player X won");
+                                        break;
+                                    case OWin:
+                                        fr.setTitle("player O won");
+                                        break;
+                                }
                             }
+                            Refresh();
                         }
                     }
                 });
