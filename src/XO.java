@@ -111,13 +111,15 @@ class XOView
                 {
                     public void actionPerformed(ActionEvent e)
                     {
-                        if(mod.GameStatus() == XOStatus.Continue) {
+                        if(mod.GameStatus() == XOStatus.Continue)
+                        {
                             mod.Move(finalRow, finalCol);
-                            XOStatus status = mod.GameStatus();
-                            if (status == XOStatus.Continue) { //mod.Move(finalRow, finalCol);
-                                //Refresh();
-                            } else {
-                                switch (mod.GameStatus()) {
+//                            XOStatus status = mod.GameStatus();
+//                            if (status == XOStatus.Continue) { //mod.Move(finalRow, finalCol);
+//                                //Refresh();
+//                            } else {
+                                switch (mod.GameStatus())
+                                {
                                     case Draw:
                                         fr.setTitle("Draw");
                                         break;
@@ -128,7 +130,6 @@ class XOView
                                         fr.setTitle("player O won");
                                         break;
                                 }
-                            }
                             Refresh();
                         }
                     }
@@ -136,13 +137,15 @@ class XOView
                 fr.add(buttons[row][col]);
             }
         }
-        Refresh();
+        //Refresh();
         fr.setVisible(true);
     }
     void Refresh()
     {
-        for (int row = 0;  row< buttons.length; row++) {
-            for (int col = 0; col < buttons[row].length; col++) {
+        for (int row = 0;  row< buttons.length; row++)
+        {
+            for (int col = 0; col < buttons[row].length; col++)
+            {
                 switch (xoModel.GetCell(row,col))
                 {
                     case X:
