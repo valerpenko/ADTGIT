@@ -36,11 +36,11 @@ class XOModel
             moveCount++;
         }
     }
-    public  XOStatus GameStatus()
+    public  XOStatus GameStatus(int row, int col)
     {//if (if state not changed see moveCount)
         //return oldStatus
         //else
-        if (victory(!XTurn)) {
+        if (victory(!XTurn, row, col)) {
             if (!XTurn)
                 return XOStatus.XWin;
             else
@@ -58,28 +58,38 @@ class XOModel
     {
         return board[row][col];
     }
-    private boolean victory(boolean XTurn)
+    private boolean victory(boolean XTurn, int row, int col)
     {
         XOCell player;
         if (XTurn)  player=XOCell.X;
         else player=XOCell.O;
-        if(board[0][0] == player  && board[0][1] == player && board[0][2] == player)
-            return true;
-        else if (board[1][0] == player && board[1][1] == player && board[1][2] == player)
-            return true;
-        else if (board[2][0] == player && board[2][1] == player && board[2][2] == player)
-            return true;
-        else if(board[0][0] == player && board[1][0] == player && board[2][0] == player)
-            return true;
-        else if (board[0][1] == player && board[1][1] == player && board[2][1] == player)
-            return true;
-        else if (board[0][2] == player && board[1][2] == player && board[2][2] == player)
-            return true;
-        else if (board[0][0] == player && board[1][1] == player && board[2][2] == player)
-            return true;
-        else if (board[0][2] == player && board[1][1] == player && board[2][0] == player)
-            return true;
-        //8 проверок
+        try {
+            if (board[row][col] == player && board[row][col - 1] == player && board[row][col + 1] == player)
+                return true;
+            if (board[row][col] == player && board[row][col - 1] == player && board[row][col - 2] == player)
+                return true;
+            if (board[row][col] == player && board[row][col + 1] == player && board[row][col + 2] == player)
+                return true;
+            if (board[row][col] == player && board[row - 1][col] == player && board[row + 1][col] == player)
+                return true;
+            if (board[row][col] == player && board[row - 1][col] == player && board[row - 2][col] == player)
+                return true;
+            if (board[row][col] == player && board[row + 1][col] == player && board[row + 2][col] == player)
+                return true;
+            if (board[row][col] == player && board[row - 1][col - 1] == player && board[row + 1][col + 1] == player)
+                return true;
+            if (board[row][col] == player && board[row - 1][col - 1] == player && board[row - 2][col - 2] == player)
+                return true;
+            if (board[row][col] == player && board[row + 1][col + 1] == player && board[row + 2][col + 2] == player)
+                return true;
+            if (board[row][col] == player && board[row - 1][col + 1] == player && board[row + 1][col - 1] == player)
+                return true;
+            if (board[row][col] == player && board[row - 1][col + 1] == player && board[row - 1][col + 2] == player)
+                return true;
+            if (board[row][col] == player && board[row + 1][col - 1] == player && board[row + 2][col - 2] == player)
+                return true;
+        }
+        catch (Exception e){}
         return false;
     }
 }
@@ -111,14 +121,14 @@ class XOView
                 {
                     public void actionPerformed(ActionEvent e)
                     {
-                        if(mod.GameStatus() == XOStatus.Continue)
+                        if(mod.GameStatus(finalRow,finalCol) == XOStatus.Continue)
                         {
                             mod.Move(finalRow, finalCol);
 //                            XOStatus status = mod.GameStatus();
 //                            if (status == XOStatus.Continue) { //mod.Move(finalRow, finalCol);
 //                                //Refresh();
 //                            } else {
-                                switch (mod.GameStatus())
+                                switch (mod.GameStatus(finalRow,finalCol))
                                 {
                                     case Draw:
                                         fr.setTitle("Draw");
@@ -165,7 +175,7 @@ public class XO
 {
     public static void main(String[] args)
     {
-        XOModel model = new XOModel();
+        XOModel model = new XOModel(6,6);
         XOView view = new XOView(model);
 //        int X = 1;
 //        int O = 0;
