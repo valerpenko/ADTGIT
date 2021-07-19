@@ -63,33 +63,54 @@ class XOModel
         XOCell player;
         if (XTurn)  player=XOCell.X;
         else player=XOCell.O;
+            try {
+                if (board[row][col] == player && board[row][col - 1] == player && board[row][col + 1] == player)
+                    return true;
+            }catch (Exception e){}
         try {
-            if (board[row][col] == player && board[row][col - 1] == player && board[row][col + 1] == player)
-                return true;
             if (board[row][col] == player && board[row][col - 1] == player && board[row][col - 2] == player)
                 return true;
+        }catch (Exception e){}
+        try {
             if (board[row][col] == player && board[row][col + 1] == player && board[row][col + 2] == player)
                 return true;
+        }catch (Exception e){}
+        try {
             if (board[row][col] == player && board[row - 1][col] == player && board[row + 1][col] == player)
                 return true;
+        }catch (Exception e){}
+        try {
             if (board[row][col] == player && board[row - 1][col] == player && board[row - 2][col] == player)
                 return true;
+        }catch (Exception e){}
+        try {
             if (board[row][col] == player && board[row + 1][col] == player && board[row + 2][col] == player)
                 return true;
+        }catch (Exception e){}
+        try {
             if (board[row][col] == player && board[row - 1][col - 1] == player && board[row + 1][col + 1] == player)
                 return true;
+        }catch (Exception e){}
+        try {
             if (board[row][col] == player && board[row - 1][col - 1] == player && board[row - 2][col - 2] == player)
                 return true;
+        }catch (Exception e){}
+        try {
             if (board[row][col] == player && board[row + 1][col + 1] == player && board[row + 2][col + 2] == player)
                 return true;
+        }catch (Exception e){}
+        try {
             if (board[row][col] == player && board[row - 1][col + 1] == player && board[row + 1][col - 1] == player)
                 return true;
+        }catch (Exception e){}
+        try {
             if (board[row][col] == player && board[row - 1][col + 1] == player && board[row - 1][col + 2] == player)
                 return true;
+        }catch (Exception e){}
+        try {
             if (board[row][col] == player && board[row + 1][col - 1] == player && board[row + 2][col - 2] == player)
                 return true;
-        }
-        catch (Exception e){}
+        }catch (Exception e){}
         return false;
     }
 }
@@ -99,10 +120,12 @@ class XOView
     JButton [][] buttons;
     JFrame fr;
     XOModel xoModel;
+    XOStatus state;
 
     XOView(XOModel mod)
     {
         xoModel=mod;
+        state = XOStatus.Continue;
         fr = new JFrame();
         fr.setSize(400,400);
         fr.setLayout(new GridLayout(mod.height, mod.width));
@@ -110,44 +133,35 @@ class XOView
         fr.setTitle("Continue");
         buttons = new JButton[mod.height][mod.width];
         for (int row = 0;  row< buttons.length; row++)
-        {
-            for (int col = 0; col < buttons[row].length; col++)
-            {
-                buttons[row][col] = new JButton();
+        {   for (int col = 0; col < buttons[row].length; col++)
+            {   buttons[row][col] = new JButton();
                 JButton finalCell = buttons[row][col];
                 int finalRow = row;
                 int finalCol = col;
                 buttons[row][col].addActionListener(new ActionListener()
-                {
-                    public void actionPerformed(ActionEvent e)
-                    {
-                        if(mod.GameStatus(finalRow,finalCol) == XOStatus.Continue)
+                {   public void actionPerformed(ActionEvent e)
+                    {   if(state == XOStatus.Continue)
                         {
                             mod.Move(finalRow, finalCol);
-//                            XOStatus status = mod.GameStatus();
-//                            if (status == XOStatus.Continue) { //mod.Move(finalRow, finalCol);
-//                                //Refresh();
-//                            } else {
-                                switch (mod.GameStatus(finalRow,finalCol))
-                                {
-                                    case Draw:
-                                        fr.setTitle("Draw");
-                                        break;
-                                    case XWin:
-                                        fr.setTitle("player X won");
-                                        break;
-                                    case OWin:
-                                        fr.setTitle("player O won");
-                                        break;
-                                }
                             Refresh();
+                            state = mod.GameStatus(finalRow, finalCol);
+                            switch (state) {
+                                case Draw:
+                                    fr.setTitle("Draw");
+                                    break;
+                                case XWin:
+                                    fr.setTitle("player X won");
+                                    break;
+                                case OWin:
+                                    fr.setTitle("player O won");
+                                    break;
+                            }
                         }
                     }
                 });
                 fr.add(buttons[row][col]);
             }
         }
-        //Refresh();
         fr.setVisible(true);
     }
     void Refresh()
