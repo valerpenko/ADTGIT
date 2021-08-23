@@ -70,8 +70,8 @@ public class FirstGraphTest
 //        for(Entry<Vertex<String>, Integer> obj : sp.entrySet())
 //            System.out.format("%s - %d%n", obj.getKey().getElement(),obj.getValue());
 
-        Map<Vertex<String>, Integer> mst = PrimJarnik.MST(graph, cityA);
-        for(Entry<Vertex<String>, Integer> obj : mst.entrySet())
-            System.out.format("%s - %d%n", obj.getKey().getElement(),obj.getValue());
+        Map<Vertex<String>, Edge<Integer>> mst = PrimJarnik.MST(graph, cityA);
+        for(Entry<Vertex<String>, Edge<Integer>> obj : mst.entrySet())
+            System.out.format("%s - %d%n", obj.getKey().getElement(),obj.getValue().getElement());
     }
 }

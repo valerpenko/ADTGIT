@@ -4,12 +4,12 @@ import arraybased.ProbeHashMap;
 
 public class PrimJarnik
 {
-    public static <V> Map<Vertex<V>, Integer> MST(Graph<V,Integer> g, Vertex<V> src)
+    public static <V> Map<Vertex<V>, Edge<Integer>> MST(Graph<V,Integer> g, Vertex<V> src)
     {
         // d.get(v) is upper bound on distance from src to v
         Map<Vertex<V>, Integer> d = new ProbeHashMap<>();
         // map reachable v to its d value
-        Map<Vertex<V>, Integer> cloud = new ProbeHashMap<>();
+        Map<Vertex<V>, Edge<Integer>> tree = new ProbeHashMap<>();
         // pq will have vertices as elements, with d.get(v) as key
         AdaptablePriorityQueue<Integer, Vertex<V>> pq;
         pq = new HeapAdaptablePriorityQueue<>();
@@ -31,22 +31,23 @@ public class PrimJarnik
             Entry<Integer, Vertex<V>> entry = pq.removeMin();
             int key = entry.getKey();
             Vertex<V> u = entry.getValue();
-            cloud.put(u, key); // this is actual distance to u
+            //tree.put(u, key); // this is actual distance to u
             pqTokens.remove(u); // u is no longer in pq
             for (Edge<Integer> e : g.outgoingEdges(u))
             {
                 Vertex<V> v = g.opposite(u,e);
-                if (cloud.get(v) == null)
+                if (tree.get(v) == null)
                 {
                     int wgt = e.getElement();
                     if (wgt < d.get(v))
                     { // better path to v?
                         d.put(v, wgt); // update the distance
+                        tree.put(u,e);
                         pq.replaceKey(pqTokens.get(v), d.get(v)); // update the pq entry
                     }
                 }
             }
         }
-        return cloud; // this only includes reachable vertices
+        return tree; // this only includes reachable vertices
     }
 }
