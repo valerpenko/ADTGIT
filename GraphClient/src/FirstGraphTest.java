@@ -66,8 +66,12 @@ public class FirstGraphTest
         PositionalList<Vertex<String>> sort = topoSort.topologicalSort(graph);
         System.out.println(sort);
 
-        Map<Vertex<String>, Integer> sp = Dijkstra.shortestPathLengths(graph, cityA);
-        for(Entry<Vertex<String>, Integer> obj : sp.entrySet())
+//        Map<Vertex<String>, Integer> sp = Dijkstra.shortestPathLengths(graph, cityA);
+//        for(Entry<Vertex<String>, Integer> obj : sp.entrySet())
+//            System.out.format("%s - %d%n", obj.getKey().getElement(),obj.getValue());
+
+        Map<Vertex<String>, Integer> mst = PrimJarnik.MST(graph, cityA);
+        for(Entry<Vertex<String>, Integer> obj : mst.entrySet())
             System.out.format("%s - %d%n", obj.getKey().getElement(),obj.getValue());
     }
 }
